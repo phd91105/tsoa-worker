@@ -1,4 +1,4 @@
-# tsoa-worker-template
+# tsoa-worker
 
 A template for creating a tsoa project on cloudflare workers
 

@@ -1,22 +1,28 @@
 {
-  "name": "tsoa-workers",
+  "name": "tsoa-worker",
   "version": "0.0.1",
   "license": "UNLICENSED",
   "scripts": {
     "build": "tsoa spec-and-routes",
-    "dev": "run build && wrangler dev",
-    "lint:fix": "eslint --fix src/**/*.ts --no-ignore"
+    "dev": "run build && concurrently nodemon 'wrangler dev'",
+    "deploy": "wrangler deploy --minify",
+    "lint:fix": "eslint --fix src/**/*.ts --no-ignore",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
     "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^6.4.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^4.2.1",
     "hono": "^3.12.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "nodemon": "^3.0.2",
     "prettier": "^2.8.8",
     "prettier-plugin-organize-imports": "^3.2.2",
     "ts-node": "^10.9.2",
@@ -25,6 +31,11 @@
     "tsyringe": "^4.8.0",
     "typescript": "^4.9.5",
     "wrangler": "^3.22.4"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "yarn@4.0.2"
 }

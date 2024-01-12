@@ -1,19 +1,21 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { RegisterRoutes } from '../build/routes';
+import { secureHeaders } from 'hono/secure-headers';
+import { timing } from 'hono/timing';
+
+import { RegisterRoutes } from '../lib/routes';
 
 const app = new Hono();
 
 app.use(
-  cors({
-    origin: '*',
-    allowMethods: ['post', 'put', 'get', 'delete', 'patch', 'options'],
-    exposeHeaders: ['content-length', 'content-range'],
-    credentials: true,
-  }),
+  '*',
+  // Global middlewares
+  timing(),
+  secureHeaders(),
+  cors(),
 );
 
-RegisterRoutes<Hono>(app);
+RegisterRoutes(app);
 
-export default app;
-export type App = typeof app;
+export default app.fetch;
+export type AppType = typeof app;

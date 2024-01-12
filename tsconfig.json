@@ -18,8 +18,8 @@
     "types": ["@types/node", "@cloudflare/workers-types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src", "lib"]
 }

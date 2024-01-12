@@ -196,5 +196,5 @@ dist
 .dev.vars
 .DS_Store
 .vscode/
-build/
+lib/routes.ts
 swagger.json

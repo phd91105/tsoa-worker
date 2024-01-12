@@ -1,14 +1,14 @@
 {
   "entryFile": "src/app.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
-  "controllerPathGlobs": ["src/**/**/*.controller.ts"],
+  "controllerPathGlobs": ["src/controllers/**/*.ts"],
   "spec": {
-    "outputDirectory": "src/modules/swagger",
+    "outputDirectory": "src/config",
     "specVersion": 3
   },
   "routes": {
-    "routesDir": "build",
+    "routesDir": "lib",
     "middlewareTemplate": "node_modules/tsoa-hono/hono-router.hbs",
-    "iocModule": "src/lib/tsyringe"
+    "iocModule": "lib/tsyringe"
   }
 }
