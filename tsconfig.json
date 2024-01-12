@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "outDir": "dist",
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "pretty": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": false,
+    "traceResolution": false,
+    "target": "esnext",
+    "module": "esnext",
+    "types": ["@types/node", "@cloudflare/workers-types"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
+}

@@ -1,0 +1,4 @@
+name = "tsoa-worker"
+main = "src/server.ts"
+compatibility_date = "2023-12-18"
+node_compat = true
