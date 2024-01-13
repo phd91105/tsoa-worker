@@ -2340,10 +2340,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^3.12.2":
-  version: 3.12.2
-  resolution: "hono@npm:3.12.2"
-  checksum: f998fefab709bb7f3c8a8a7774a99275d8c8991fbdc7953ab01e0236d570033d9bb44149b2680a7832386e2ee32595d7b4fea14c2fd0396deb024285fe52b420
+"hono@npm:^3.12.3":
+  version: 3.12.3
+  resolution: "hono@npm:3.12.3"
+  checksum: 84a674ef0c6e51657b984d32dbd4e92ff0db13ab72d71f180e0ad4f801d4ed8d761b7c6dac364b302e9ea2d8e44569d444f678c72f221f7f3cfc4cd18dcef24a
   languageName: node
   linkType: hard
 
@@ -4273,7 +4273,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.8.0"
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-prettier: "npm:^4.2.1"
-    hono: "npm:^3.12.2"
+    hono: "npm:^3.12.3"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^15.2.0"
     nodemon: "npm:^3.0.2"

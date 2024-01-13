@@ -4,6 +4,7 @@ import { secureHeaders } from 'hono/secure-headers';
 import { timing } from 'hono/timing';
 
 import { RegisterRoutes } from '../lib/routes';
+import { provideContext } from './middlewares';
 
 const app = new Hono();
 
@@ -13,6 +14,7 @@ app.use(
   timing(),
   secureHeaders(),
   cors(),
+  provideContext,
 );
 
 RegisterRoutes(app);

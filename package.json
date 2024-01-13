@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "tsoa spec-and-routes",
-    "dev": "run build && concurrently nodemon 'wrangler dev'",
+    "dev": "concurrently nodemon 'wrangler dev'",
     "deploy": "wrangler deploy --minify",
     "lint:fix": "eslint --fix src/**/*.ts --no-ignore",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "tsoa spec-and-routes"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
@@ -19,7 +19,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "hono": "^3.12.2",
+    "hono": "^3.12.3",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "nodemon": "^3.0.2",

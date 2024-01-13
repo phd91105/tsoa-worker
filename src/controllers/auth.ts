@@ -2,6 +2,8 @@ import { Body, Controller, Post, Route, Tags } from '@tsoa/runtime';
 
 import { inject, injectable } from 'tsyringe';
 
+import type { Context } from 'hono';
+import { context } from '../constants';
 import type { SignInDto, SignUpDto } from '../models/auth';
 import { AuthService } from '../services/auth';
 
@@ -9,12 +11,16 @@ import { AuthService } from '../services/auth';
 @Tags('Auth')
 @injectable()
 export class AuthController extends Controller {
-  constructor(@inject(AuthService) private service: AuthService) {
+  constructor(
+    @inject(AuthService) private service: AuthService,
+    @inject(context) private c: Context,
+  ) {
     super();
   }
 
   @Post('/register')
   signUp(@Body() user: SignUpDto) {
+    console.log(this.c.env);
     return this.service.regsiter(user);
   }
 
