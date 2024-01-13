@@ -3,12 +3,17 @@
   "version": "0.0.1",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "concurrently nodemon 'wrangler dev'",
-    "dev:bun": "bun run src/bun.ts --watch",
     "deploy": "wrangler deploy --minify",
+    "dev": "concurrently nodemon 'wrangler dev'",
+    "dev:bun": "concurrently nodemon 'bun --hot src/bun.ts'",
+    "postinstall": "tsoa spec-and-routes",
     "lint:fix": "eslint --fix src/**/*.ts --no-ignore",
-    "prepare": "husky install",
-    "postinstall": "tsoa spec-and-routes"
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
@@ -32,11 +37,6 @@
     "tsyringe": "^4.8.0",
     "typescript": "^4.9.5",
     "wrangler": "^3.22.4"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "prettier --write"
-    ]
   },
   "packageManager": "yarn@4.0.2"
 }

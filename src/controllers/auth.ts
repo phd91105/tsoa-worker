@@ -20,7 +20,6 @@ export class AuthController extends Controller {
 
   @Post('/register')
   signUp(@Body() user: SignUpDto) {
-    console.log(this.ctx.env);
     return this.service.regsiter(user);
   }
 
