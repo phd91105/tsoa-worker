@@ -4,6 +4,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "concurrently nodemon 'wrangler dev'",
+    "dev:bun": "bun run src/bun.ts --watch",
     "deploy": "wrangler deploy --minify",
     "lint:fix": "eslint --fix src/**/*.ts --no-ignore",
     "prepare": "husky install",

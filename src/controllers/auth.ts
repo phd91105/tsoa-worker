@@ -13,14 +13,14 @@ import { AuthService } from '../services/auth';
 export class AuthController extends Controller {
   constructor(
     @inject(AuthService) private service: AuthService,
-    @inject(context) private c: Context,
+    @inject(context) private ctx: Context,
   ) {
     super();
   }
 
   @Post('/register')
   signUp(@Body() user: SignUpDto) {
-    console.log(this.c.env);
+    console.log(this.ctx.env);
     return this.service.regsiter(user);
   }
 

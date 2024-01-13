@@ -1,6 +1,6 @@
 import { Controller, Get, Hidden, Route } from '@tsoa/runtime';
 import swagger from '../config/swagger.json';
-import swaggerUI from '../templates/swagger.html';
+import swaggerUI from '../templates/swagger';
 
 @Route()
 @Hidden()

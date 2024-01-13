@@ -1,24 +1,20 @@
-<!DOCTYPE html>
+export default `<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>Swagger UI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css" />
-
     <style>
         html {
             box-sizing: border-box;
             overflow: -moz-scrollbars-vertical;
             overflow-y: scroll;
         }
-
         *,
         *:before,
         *:after {
             box-sizing: inherit;
         }
-
         body {
             margin: 0;
             background: #fafafa;
@@ -47,5 +43,4 @@
         };
     </script>
 </body>
-
-</html>
+</html>`;
