@@ -7,7 +7,7 @@ The template generates routes for the tsoa-controllers.
 It exposes the following endpoints in addition to the generated routes:
 
 - /spec. The swagger.json document
-- /doc. A swagger-ui for testing the routes
+- /docs. A swagger-ui for testing the routes
 
 ## Getting started
 

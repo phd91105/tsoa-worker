@@ -1,14 +1,27 @@
 {
-  "entryFile": "src/app.ts",
+  "entryFile": "./src/app.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
-  "controllerPathGlobs": ["src/controllers/**/*.ts"],
+  "controllerPathGlobs": ["./src/controllers/**/*.ts"],
   "spec": {
-    "outputDirectory": "src/config",
-    "specVersion": 3
+    "outputDirectory": "./src/config",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
   },
   "routes": {
-    "routesDir": "lib",
-    "middlewareTemplate": "node_modules/tsoa-hono/hono-router.hbs",
-    "iocModule": "lib/tsyringe"
+    "routesDir": "./src/",
+    "middlewareTemplate": "./node_modules/tsoa-hono/hono-router.hbs",
+    "iocModule": "./lib/tsyringe",
+    "authenticationModule": "./src/middlewares/authenticate.ts"
+  },
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    }
   }
 }

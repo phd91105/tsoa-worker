@@ -1,52 +1,37 @@
 export class StringUtils {
-  static truncateUtf8(str: string, n: number) {
-    let l = 0;
-    let r = '';
-    for (let i = 0; i < str.length; i++) {
-      const c = str.charCodeAt(i);
-      if (
-        (c >= 0x0 && c < 0x81) ||
-        c === 0xf8f0 ||
-        (c >= 0xff61 && c < 0xffa0) ||
-        (c >= 0xf8f1 && c < 0xf8f4)
-      ) {
-        l += 1;
-      } else {
-        l += 2;
-      }
-      if (l <= n) {
-        r = r.concat(str[i]);
+  static truncateUtf8(str: string, n: number): string {
+    let result = '';
+    for (const char of str) {
+      result += char;
+      if (new TextEncoder().encode(result).length > n) {
+        return result.slice(0, -1);
       }
     }
-    return r;
+    return result;
   }
 
-  static truncate2byte(s: string, n: number) {
-    if (s !== null && s !== undefined) {
-      const r = this.truncateUtf8(s.toString(), n);
+  static truncate2byte(s: string, n: number): string {
+    return s.length !== this.truncateUtf8(s, n).length
+      ? `${this.truncateUtf8(s, n)}...`
+      : s;
+  }
 
-      if (r.length !== s.toString().length) {
-        return `${r}...`;
-      } else {
-        return r;
-      }
+  static removeDiacritics(str: string): string {
+    const diacriticsMap = {
+      a: /[àáạảãâầấậẩẫăằắặẳẵ]/g,
+      e: /[èéẹẻẽêềếệểễ]/g,
+      i: /[ìíịỉĩ]/g,
+      o: /[òóọỏõôồốộổỗơờớợởỡ]/g,
+      u: /[ùúụủũưừứựửữ]/g,
+      y: /[ỳýỵỷỹ]/g,
+      d: /đ/g,
+      c: /[ç]/g,
+      n: /[ñ]/g,
+    };
+    str = str.toLowerCase().replace(/\s/g, '').replace(/'/g, '');
+    for (const [nonDiacritic, regex] of Object.entries(diacriticsMap)) {
+      str = str.replace(regex, nonDiacritic);
     }
-
-    return s;
-  }
-
-  static removeDiacritics(str: string) {
-    str = str.toLowerCase();
-    str = str.replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, 'a');
-    str = str.replace(/[èéẹẻẽêềếệểễ]/g, 'e');
-    str = str.replace(/[ìíịỉĩ]/g, 'i');
-    str = str.replace(/[òóọỏõôồốộổỗơờớợởỡ]/g, 'o');
-    str = str.replace(/[ùúụủũưừứựửữ]/g, 'u');
-    str = str.replace(/[ỳýỵỷỹ]/g, 'y');
-    str = str.replace(/đ/g, 'd');
-    str = str.replace(/\s/g, '');
-    str = str.replace(/'/g, '');
-
     return str;
   }
 

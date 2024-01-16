@@ -1,3 +1,14 @@
-import fetch from './app';
+import app from '@/app';
 
-export default { fetch };
+export default {
+  fetch(request: Request, env: Env, context: ExecutionContext) {
+    return app.fetch(
+      request,
+      {
+        ...process.env,
+        ...env,
+      },
+      context,
+    );
+  },
+};

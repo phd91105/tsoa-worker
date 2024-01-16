@@ -2,27 +2,29 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
-import { timing } from 'hono/timing';
 
-import { RegisterRoutes } from '../lib/routes';
-import { provideContext } from './middlewares';
-import { swaggerRoutes } from './routes';
+import { provideContext } from '@/middlewares/context';
+import { errorHandler, notFoundHandler } from '@/middlewares/exceptions';
+import { handleFileUpload } from '@/middlewares/parseFile';
+import { RegisterRoutes } from '@/routes';
 
 const app = new Hono();
 
+// Global middlewares
 app.use(
   '*',
-  // Global middlewares
-  logger(),
-  timing(),
-  secureHeaders(),
   cors(),
-  provideContext,
+  logger(),
+  secureHeaders(),
+  provideContext(),
+  handleFileUpload(),
 );
 
-app.route('/', swaggerRoutes);
-
+// Generated routes from controllers
 RegisterRoutes(app);
 
-export default app.fetch;
-export type AppType = typeof app;
+// Error handlers
+app.notFound(notFoundHandler);
+app.onError(errorHandler);
+
+export default app;

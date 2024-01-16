@@ -4,3 +4,7 @@ declare module '*.html' {
 }
 
 declare type Env<T = string> = { [key: string]: T };
+
+declare type ReqCtx = Request & {
+  ctx: Context<{ Bindings: Env }>;
+};

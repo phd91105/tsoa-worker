@@ -194,7 +194,6 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,yarn
 .dev.vars
-.DS_Store
 .vscode/
-lib/routes.ts
+routes.ts
 swagger.json

@@ -14,7 +14,7 @@
   "env": {
     "node": true
   },
-  "ignorePatterns": [".eslintrc", "*/**/*.json", "*.d.ts"],
+  "ignorePatterns": [".eslintrc", "*/**/*.json", "*.d.ts", "routes.ts"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/consistent-type-imports": "error",

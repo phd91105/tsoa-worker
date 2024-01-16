@@ -1,25 +1,28 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "moduleResolution": "node",
+    "lib": ["esnext"],
+    "target": "esnext",
+    "module": "esnext",
     "outDir": "dist",
+    "rootDir": ".",
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "pretty": true,
-    "rootDir": ".",
     "skipLibCheck": true,
     "strict": false,
     "traceResolution": false,
-    "target": "esnext",
-    "module": "esnext",
-    "types": ["@types/node", "@cloudflare/workers-types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["@types/node", "@cloudflare/workers-types"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    }
   },
   "exclude": ["node_modules"],
-  "include": ["src", "lib"]
+  "include": ["src/**/*.ts"]
 }
