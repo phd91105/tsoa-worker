@@ -1,7 +1,8 @@
-import { HttpStatus } from '@/enums/httpStatus';
 import type { MiddlewareHandler } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { verify } from 'hono/jwt';
+
+import { HttpStatus } from '@/enums/httpStatus';
 
 export enum SecurityType {
   jwt = 'jwt',

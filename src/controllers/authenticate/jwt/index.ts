@@ -1,5 +1,4 @@
 import { Body, Controller, NoSecurity, Post, Route, Tags } from '@tsoa/runtime';
-
 import { inject, injectable } from 'tsyringe';
 
 import type { SignIn, SignUp } from '@/interfaces/authenticate';

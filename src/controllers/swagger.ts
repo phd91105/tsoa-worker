@@ -1,6 +1,7 @@
-import swaggerSpec from '@/config/swagger.json';
 import { Controller, Get, Hidden, NoSecurity, Route } from '@tsoa/runtime';
 import { injectable } from 'tsyringe';
+
+import swaggerSpec from '@/config/swagger.json';
 import swaggerUI from '~/templates/swagger';
 
 @Route('/docs')

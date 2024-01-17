@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "John",
+    "email": "john@gmail.com",
+    "role": "admin",
+    "password": "$2a$10$LQ.RSuE1fFsp6jiuk8ejqe/pdiTrbyYUhy.T.PNjVSim.QFzSLjSC",
+    "age": 30
+  },
+  {
+    "id": 2,
+    "name": "Jane",
+    "email": "jane@gmail.com",
+    "password": "$2a$10$nTLM.PEBLybDy7/NKepfJOC/LoqPzIY4gnT/Ww8swHXNTPZ.lemYK",
+    "role": "user",
+    "age": 25
+  },
+  {
+    "id": 3,
+    "name": "Jim",
+    "password": "$2a$10$ENUmDzeE/cGCc7hCWQ3zx.L6AdOCOyPtmPgOm4YO3vq7vyT0081PS",
+    "email": "jim@gmail.com",
+    "role": "user",
+    "age": 40
+  }
+]

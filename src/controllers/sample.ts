@@ -1,5 +1,3 @@
-import { context } from '@/constants/injectKey';
-import { SecurityType } from '@/middlewares/authenticate';
 import {
   Controller,
   Post,
@@ -10,6 +8,9 @@ import {
 } from '@tsoa/runtime';
 import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
+
+import { context } from '@/constants/injectKey';
+import { SecurityType } from '@/middlewares/authenticate';
 
 @Route('sample')
 @Tags('sample')
