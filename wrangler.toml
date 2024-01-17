@@ -2,3 +2,8 @@ name = "tsoa"
 main = "src/index.ts"
 compatibility_date = "2023-12-18"
 node_compat = true
+
+kv_namespaces = [
+    { binding = "token", id = "1047515ec7b24becbf6528f2bc539cd0", preview_id = "d51b52d1f1164a3e992ef9770a7a60d7" },
+    { binding = "storage", id = "0bff6a0bd20e4c81a7fd17670ec13583", preview_id = "754b6130affa469398c7cd439a78109c" }
+]

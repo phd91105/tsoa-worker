@@ -22,7 +22,7 @@ export interface SignUp {
   /**
    * @minLength 8 password must be at least 8 characters
    * @maxLength 16 password must be at most 16 characters
-   * @pattern ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$ password must contain at least one uppercase letter, one lowercase letter and one number
+   * @pattern ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$ password must contain at least one uppercase letter, one lowercase letter and one number
    */
   password: string;
 }
@@ -42,7 +42,7 @@ export interface SignIn {
   /**
    * @minLength 8 password must be at least 8 characters
    * @maxLength 16 password must be at most 16 characters
-   * @pattern ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]$ password must contain at least one uppercase letter, one lowercase letter and one number
+   * @pattern ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$ password must contain at least one uppercase letter, one lowercase letter and one number
    */
   password: string;
 }

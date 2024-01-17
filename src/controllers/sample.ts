@@ -1,26 +1,30 @@
+import { context } from '@/constants/injectKey';
 import { SecurityType } from '@/middlewares/authenticate';
 import {
   Controller,
   Post,
-  Request,
   Route,
   Security,
   Tags,
   UploadedFile,
 } from '@tsoa/runtime';
-import { injectable } from 'tsyringe';
+import type { Context } from 'hono';
+import { inject, injectable } from 'tsyringe';
 
 @Route('sample')
 @Tags('sample')
 @injectable()
 export class Sample extends Controller {
-  /**
-   * This is a sample route.
-   */
+  private storage: KVNamespace;
+
+  constructor(@inject(context) private readonly ctx: Context) {
+    super();
+    this.storage = this.ctx.env.storage;
+  }
+
   @Security(SecurityType.jwt)
   @Post('/upload')
   async uploadFile(
-    @Request() req: ReqCtx,
     /**
      * @required File is required.
      */
@@ -28,8 +32,8 @@ export class Sample extends Controller {
     file: File,
   ) {
     const arrbuf = await file.arrayBuffer();
-    console.log(arrbuf);
-    // this.ctx.env.storage.put(file.name, arrbuf);
+    this.ctx.executionCtx.waitUntil(this.storage.put(file.name, arrbuf));
+
     return { file: file.name };
   }
 }
