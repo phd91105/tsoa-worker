@@ -1,8 +1,7 @@
 import type { MiddlewareHandler } from 'hono';
-import { HTTPException } from 'hono/http-exception';
 import { verify } from 'hono/jwt';
 
-import { HttpStatus } from '@/enums/httpStatus';
+import { Forbidden, Unauthorized } from '@/exceptions/http.exceptions';
 
 export enum SecurityType {
   jwt = 'jwt',
@@ -19,25 +18,14 @@ export const authenticationHandler = (
     const authHeader = c.req.header('authorization');
 
     if (!authHeader || !authHeader.toLowerCase().startsWith('bearer')) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: 'Unauthorized.',
-      });
+      throw new Unauthorized();
     }
 
     const bearer = authHeader.slice(7);
-    let payload = null;
-    try {
-      payload = await verify(bearer, c.env.SECRET);
-    } catch (error) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: 'Unauthorized.',
-      });
-    }
+    const payload = await verify(bearer, c.env.SECRET);
 
     if (permission.length && !permission.includes(payload.role)) {
-      throw new HTTPException(HttpStatus.FORBIDDEN, {
-        message: 'Forbidden.',
-      });
+      throw new Forbidden();
     }
 
     return next();

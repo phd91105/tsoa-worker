@@ -46,3 +46,10 @@ export interface SignIn {
    */
   password: string;
 }
+
+export interface RefreshToken {
+  /**
+   * @isString refreshToken must be a string
+   */
+  refreshToken: string;
+}

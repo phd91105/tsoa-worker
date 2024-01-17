@@ -6,6 +6,7 @@ export const handleFileUpload = (): MiddlewareHandler => {
     if (!contentType?.includes('multipart/form-data')) {
       return next();
     }
+
     const body = await c.req.parseBody();
     c['files'] = [
       ...Object.values(body).filter((item) => item instanceof Blob),

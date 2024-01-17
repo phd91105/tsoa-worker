@@ -1,13 +1,12 @@
 import bcrypt from 'bcryptjs';
 import type { Context } from 'hono';
-import { HTTPException } from 'hono/http-exception';
 import { sign } from 'hono/jwt';
 import { inject, injectable } from 'tsyringe';
 
 import { context } from '@/constants/injectKey';
-import { HttpStatus } from '@/enums/httpStatus';
+import { BadRequest, Unauthorized } from '@/exceptions/http.exceptions';
 import type { SignIn, SignUp } from '@/interfaces/authenticate';
-import { Role } from '@/models/user';
+import type { User } from '@/models/user';
 import users from '~/mocks/users.json';
 
 @injectable()
@@ -24,41 +23,57 @@ export class AuthService {
 
   async login(body: SignIn) {
     const user = users.find((user) => user.email === body.email);
+
     if (!user) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: 'Unauthorized.',
-      });
+      throw new Unauthorized();
     }
 
     const isValid = await bcrypt.compare(body.password, user.password);
 
     if (!isValid) {
-      throw new HTTPException(HttpStatus.UNAUTHORIZED, {
-        message: 'Unauthorized.',
-      });
+      throw new Unauthorized();
     }
 
-    const refreshToken: string = crypto.randomUUID();
-    const accessToken = await sign(user, this.ctx.env.SECRET);
-
-    this.ctx.executionCtx.waitUntil(
-      this.tokenStorage.put(refreshToken, String(user.id), {
-        expirationTtl: 60 * 60 * 24 * 1, // 1 day
-      }),
-    );
+    const { refreshToken, accessToken } = await this.generateToken(<User>user);
 
     return { refreshToken, accessToken };
   }
 
   async refresh(refreshToken: string) {
-    const userId = await this.tokenStorage.get(refreshToken);
-    if (!userId) {
-      throw new Error('Invalid refresh token');
+    let userId = null;
+
+    try {
+      userId = await this.tokenStorage.get(refreshToken);
+    } catch (error) {
+      userId = null;
     }
 
-    const user = { role: Role.admin, id: 1 };
+    if (!userId) {
+      throw new BadRequest('Invalid refresh token');
+    }
+
+    const user = users.find((user) => user.id === Number(userId));
+
+    if (!user) {
+      throw new BadRequest('Invalid refresh token');
+    }
+
+    const { refreshToken: newRefreshToken, accessToken } =
+      await this.generateToken(<User>user);
+
+    return { refreshToken: newRefreshToken, accessToken };
+  }
+
+  private async generateToken(user: User) {
+    const refreshToken: string = crypto.randomUUID();
     const accessToken = await sign(user, this.ctx.env.SECRET);
 
-    return { accessToken };
+    this.ctx.executionCtx.waitUntil(
+      this.tokenStorage.put(refreshToken, String(user.id), {
+        expirationTtl: 60 * 60 * 24 * 1,
+      }),
+    );
+
+    return { refreshToken, accessToken };
   }
 }

@@ -29,8 +29,7 @@ export class Sample extends Controller {
     /**
      * @required File is required.
      */
-    @UploadedFile('file')
-    file: File,
+    @UploadedFile('file') file: File,
   ) {
     const arrbuf = await file.arrayBuffer();
     this.ctx.executionCtx.waitUntil(this.storage.put(file.name, arrbuf));

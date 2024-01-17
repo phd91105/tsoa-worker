@@ -1,10 +1,11 @@
 import type { Context } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 
-import { HttpStatus } from '@/enums/httpStatus';
+import { HttpStatus } from '@/enums/http.status';
+import { NotFound } from '@/exceptions/http.exceptions';
 
-export const notFoundHandler = (c: Context) => {
-  return c.text('Not found.', HttpStatus.NOT_FOUND);
+export const notFoundHandler = () => {
+  throw new NotFound();
 };
 
 export const errorHandler = (e: Error, c: Context) => {
