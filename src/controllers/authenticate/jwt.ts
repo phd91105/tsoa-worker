@@ -1,6 +1,15 @@
-import { Body, Controller, NoSecurity, Post, Route, Tags } from '@tsoa/runtime';
+import {
+  Body,
+  Controller,
+  NoSecurity,
+  Post,
+  Response,
+  Route,
+  Tags,
+} from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { HttpStatus } from '@/enums/http.status';
 import type { RefreshToken, SignIn, SignUp } from '@/interfaces/authenticate';
 import { AuthService } from '@/services/authenticate';
 
@@ -16,6 +25,7 @@ export class JWTAuth extends Controller {
     super();
   }
 
+  @Response(HttpStatus.CREATED)
   @Post('/register')
   signUp(@Body() user: SignUp) {
     return this.authService.regsiter(user);

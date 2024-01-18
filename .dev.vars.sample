@@ -1,1 +1,3 @@
 SECRET: "sECr3T"
+DB_URL: "prisma://"
+DIRECT_URL: "mysql://"

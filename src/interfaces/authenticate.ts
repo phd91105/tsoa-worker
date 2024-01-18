@@ -47,9 +47,14 @@ export interface SignIn {
   password: string;
 }
 
+/**
+ * @example {
+ *  "refreshToken": "3d47c1ec-d933-4d30-a87d-7b4181c51d79"
+ * }
+ */
 export interface RefreshToken {
   /**
-   * @isString refreshToken must be a string
+   * @minLength 1 refreshToken is required
    */
   refreshToken: string;
 }

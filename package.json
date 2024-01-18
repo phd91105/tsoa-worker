@@ -9,6 +9,8 @@
     "format": "prettier --write src/**/*.ts",
     "postinstall": "run tsoa && husky install",
     "lint": "eslint --fix src/**/*.ts --quiet",
+    "prisma:generate": "prisma generate --no-engine --accelerate",
+    "prisma:push": "prisma db push",
     "tsoa": "tsoa spec-and-routes"
   },
   "lint-staged": {
@@ -18,7 +20,9 @@
     ]
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20231218.0",
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "@prisma/client": "^5.8.1",
+    "@prisma/extension-accelerate": "^0.6.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
@@ -34,6 +38,7 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "prettier-plugin-organize-imports": "^3.2.4",
+    "prisma": "^5.8.1",
     "ts-node": "^10.9.2",
     "tsoa": "^6.0.1",
     "tsoa-hono": "^1.2.1",

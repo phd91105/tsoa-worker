@@ -18,12 +18,12 @@ import { SecurityType } from '@/middlewares/authenticate';
 export class Sample extends Controller {
   private storage: KVNamespace;
 
-  constructor(@inject(context) private readonly ctx: Context) {
+  constructor(@inject(context) private readonly c: Context) {
     super();
-    this.storage = this.ctx.env.storage;
+    this.storage = this.c.env.storage;
   }
 
-  @Security(SecurityType.jwt)
+  @Security(SecurityType.jwt, ['admin'])
   @Post('/upload')
   async uploadFile(
     /**
@@ -32,7 +32,7 @@ export class Sample extends Controller {
     @UploadedFile('file') file: File,
   ) {
     const arrbuf = await file.arrayBuffer();
-    this.ctx.executionCtx.waitUntil(this.storage.put(file.name, arrbuf));
+    this.c.executionCtx.waitUntil(this.storage.put(file.name, arrbuf));
 
     return { file: file.name };
   }

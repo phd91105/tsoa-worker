@@ -1,3 +1,4 @@
+import { Role, type User } from '@prisma/client/edge';
 import bcrypt from 'bcryptjs';
 import type { Context } from 'hono';
 import { sign } from 'hono/jwt';
@@ -6,23 +7,52 @@ import { inject, injectable } from 'tsyringe';
 import { context } from '@/constants/injectKey';
 import { BadRequest, Unauthorized } from '@/exceptions/http.exceptions';
 import type { SignIn, SignUp } from '@/interfaces/authenticate';
-import type { User } from '@/models/user';
-import users from '~/mocks/users.json';
+import { DB } from '@/providers/db';
 
 @injectable()
 export class AuthService {
   private tokenStorage: KVNamespace;
 
-  constructor(@inject(context) private readonly ctx: Context) {
-    this.tokenStorage = this.ctx.env.token;
+  constructor(
+    @inject(context) private readonly c: Context,
+    @inject(DB) private readonly db: DB,
+  ) {
+    this.tokenStorage = this.c.env.token;
   }
 
   async regsiter(body: SignUp) {
-    return body;
+    const userExists = await this.db.user.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (userExists) {
+      throw new BadRequest('Email already exists.');
+    }
+
+    const hashedPassword = await bcrypt.hash(body.password, 2);
+
+    const user = {
+      name: body.userName,
+      email: body.email,
+      role: Role.user,
+      password: hashedPassword,
+    };
+
+    const result = await this.db.user.create({
+      data: user,
+    });
+
+    return this.generateToken(result);
   }
 
   async login(body: SignIn) {
-    const user = users.find((user) => user.email === body.email);
+    const user = await this.db.user.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
 
     if (!user) {
       throw new Unauthorized();
@@ -34,42 +64,44 @@ export class AuthService {
       throw new Unauthorized();
     }
 
-    const { refreshToken, accessToken } = await this.generateToken(<User>user);
-
-    return { refreshToken, accessToken };
+    return this.generateToken(user);
   }
 
   async refresh(refreshToken: string) {
-    let userId = null;
-
-    try {
-      userId = await this.tokenStorage.get(refreshToken);
-    } catch (error) {
-      userId = null;
-    }
+    const userId = await this.tokenStorage.get(refreshToken);
 
     if (!userId) {
-      throw new BadRequest('Invalid refresh token');
+      throw new BadRequest('Invalid token.');
     }
 
-    const user = users.find((user) => user.id === Number(userId));
+    const user = await this.db.user.findUnique({
+      where: {
+        id: Number(userId),
+      },
+    });
 
     if (!user) {
-      throw new BadRequest('Invalid refresh token');
+      throw new BadRequest('Invalid token.');
     }
 
-    const { refreshToken: newRefreshToken, accessToken } =
-      await this.generateToken(<User>user);
-
-    return { refreshToken: newRefreshToken, accessToken };
+    return this.generateToken(user);
   }
 
-  private async generateToken(user: User) {
-    const refreshToken: string = crypto.randomUUID();
-    const accessToken = await sign(user, this.ctx.env.SECRET);
+  private async generateToken(payload: Pick<User, 'id'>) {
+    const secondSinceEpoch = Math.floor(new Date().getTime() / 1000);
 
-    this.ctx.executionCtx.waitUntil(
-      this.tokenStorage.put(refreshToken, String(user.id), {
+    const refreshToken: string = crypto.randomUUID();
+    const accessToken = await sign(
+      {
+        uid: payload.id,
+        iat: secondSinceEpoch,
+        exp: secondSinceEpoch + 60 * 30,
+      },
+      this.c.env.SECRET,
+    );
+
+    this.c.executionCtx.waitUntil(
+      this.tokenStorage.put(refreshToken, String(payload.id), {
         expirationTtl: 60 * 60 * 24 * 1,
       }),
     );
