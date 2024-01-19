@@ -2337,10 +2337,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^3.12.5":
-  version: 3.12.5
-  resolution: "hono@npm:3.12.5"
-  checksum: c3ba1b5ec6f9815eeaf92b7838458a6ab7edb400e22a9d7daa7058f848f96705a087d3df830ebf7d136ebcfcdc5f3b8025de895eefba8eec64f5698e20039acc
+"hono@npm:^3.12.6":
+  version: 3.12.6
+  resolution: "hono@npm:3.12.6"
+  checksum: 74475dc0519f064a6c25b4d588a65ad06b9e3217c914e1d60aad9f3fc7516786dbda44e5bab527a6e6b8a10fdf30c37d25c2d20bab03681325d65edd6909a913
   languageName: node
   linkType: hard
 
@@ -4135,13 +4135,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsoa-hono@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "tsoa-hono@npm:1.2.1"
-  checksum: 917f66712a67ae0b508cbae81998559c3e30ac88d811ea83e81780e3b6d0bbd2275229a9d79392fa15b90c758fc1eace7ec4ef7c4f1126f300137a63eea5334a
-  languageName: node
-  linkType: hard
-
 "tsoa-worker@workspace:.":
   version: 0.0.0-use.local
   resolution: "tsoa-worker@workspace:."
@@ -4159,7 +4152,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-simple-import-sort: "npm:^10.0.0"
-    hono: "npm:^3.12.5"
+    hono: "npm:^3.12.6"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^15.2.0"
     prettier: "npm:^3.2.4"
@@ -4167,10 +4160,9 @@ __metadata:
     prisma: "npm:^5.8.1"
     ts-node: "npm:^10.9.2"
     tsoa: "npm:^6.0.1"
-    tsoa-hono: "npm:^1.2.1"
     tsyringe: "npm:^4.8.0"
     typescript: "npm:^5.3.3"
-    wrangler: "npm:^3.22.5"
+    wrangler: "npm:^3.23.0"
   languageName: unknown
   linkType: soft
 
@@ -4451,9 +4443,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^3.22.5":
-  version: 3.22.5
-  resolution: "wrangler@npm:3.22.5"
+"wrangler@npm:^3.23.0":
+  version: 3.23.0
+  resolution: "wrangler@npm:3.23.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:^0.2.0"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
@@ -4476,7 +4468,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 9290b6fb5621121694f17e46f6a925cbe8d975ef099bffa678748c0cfe8ae2a24493c1bba055bf3e1062740454498ba1d3e2fe4e0524410ebc3b9e5d165cd015
+  checksum: 73a48e01492a0cf62acdfc1a5f7c5db31b8f7d486ec9fcef4580a4e4bd537d29f1932ba9fee434e4831afe1c69085286cfb80e9fc88975c01e289870773825c6
   languageName: node
   linkType: hard
 

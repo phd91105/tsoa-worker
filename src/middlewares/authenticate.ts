@@ -3,7 +3,7 @@ import { verify } from 'hono/jwt';
 import { container } from 'tsyringe';
 
 import { Forbidden, Unauthorized } from '@/exceptions/http.exceptions';
-import { DB } from '@/providers/db';
+import { Prisma } from '@/providers/db';
 
 export enum SecurityType {
   jwt = 'jwt',
@@ -30,7 +30,7 @@ export const authenticationHandler = (
     const bearer = authHeader.slice(7);
     const payload = await verify(bearer, c.env.SECRET);
 
-    const db = container.resolve(DB);
+    const db = container.resolve(Prisma);
     const user = await db.user.findUnique({
       where: {
         id: payload.uid,

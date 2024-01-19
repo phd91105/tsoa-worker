@@ -5,7 +5,6 @@ import { secureHeaders } from 'hono/secure-headers';
 
 import { provideContext } from '@/middlewares/context';
 import { errorHandler, notFoundHandler } from '@/middlewares/exceptions';
-import { handleFileUpload } from '@/middlewares/parseFile';
 import { RegisterRoutes } from '@/routes';
 
 const app = new Hono();
@@ -13,11 +12,11 @@ const app = new Hono();
 // Global middlewares
 app.use(
   '*',
+  //
   cors(),
   logger(),
   secureHeaders(),
   provideContext(),
-  handleFileUpload(),
 );
 
 // Generated routes from controllers

@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Route,
   Security,
@@ -12,7 +13,7 @@ import { inject, injectable } from 'tsyringe';
 import { context } from '@/constants/injectKey';
 import { SecurityType } from '@/middlewares/authenticate';
 
-@Route('sample')
+@Route('/sample')
 @Tags('sample')
 @injectable()
 export class Sample extends Controller {
@@ -22,6 +23,9 @@ export class Sample extends Controller {
     super();
     this.storage = this.c.env.storage;
   }
+
+  @Get('/ping')
+  ping: () => { message: 'pong' };
 
   @Security(SecurityType.jwt, ['admin'])
   @Post('/upload')

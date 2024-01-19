@@ -14,7 +14,7 @@
   },
   "routes": {
     "routesDir": "./src/",
-    "middlewareTemplate": "./node_modules/tsoa-hono/hono-router.hbs",
+    "middlewareTemplate": "./templates/tsoa.hono.hbs",
     "iocModule": "./lib/tsyringe",
     "authenticationModule": "./src/middlewares/authenticate.ts"
   },

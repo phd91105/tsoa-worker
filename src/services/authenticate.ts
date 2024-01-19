@@ -7,7 +7,7 @@ import { inject, injectable } from 'tsyringe';
 import { context } from '@/constants/injectKey';
 import { BadRequest, Unauthorized } from '@/exceptions/http.exceptions';
 import type { SignIn, SignUp } from '@/interfaces/authenticate';
-import { DB } from '@/providers/db';
+import { Prisma } from '@/providers/db';
 
 @injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
 
   constructor(
     @inject(context) private readonly c: Context,
-    @inject(DB) private readonly db: DB,
+    @inject(Prisma) private readonly db: Prisma,
   ) {
     this.tokenStorage = this.c.env.token;
   }

@@ -6,7 +6,7 @@ import { inject, singleton } from 'tsyringe';
 import { context } from '@/constants/injectKey';
 
 @singleton()
-export class DB extends PrismaClient {
+export class Prisma extends PrismaClient {
   constructor(@inject(context) c: Context) {
     super({
       datasources: {
