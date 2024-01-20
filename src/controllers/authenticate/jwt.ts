@@ -9,7 +9,7 @@ import {
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
-import { HttpStatus } from '@/enums/http.status';
+import { HttpStatus } from '@/enums/http';
 import type { RefreshToken, SignIn, SignUp } from '@/interfaces/authenticate';
 import { AuthService } from '@/services/authenticate';
 

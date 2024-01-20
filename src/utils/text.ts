@@ -34,8 +34,4 @@ export class StringUtils {
     }
     return str;
   }
-
-  static removeSingleQuote(str: string) {
-    return str.replace(/'/g, '');
-  }
 }

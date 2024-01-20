@@ -2,8 +2,8 @@ import type { MiddlewareHandler } from 'hono';
 import { verify } from 'hono/jwt';
 import { container } from 'tsyringe';
 
-import { Forbidden, Unauthorized } from '@/exceptions/http.exceptions';
-import { Prisma } from '@/providers/db';
+import { Forbidden, Unauthorized } from '@/errors/exceptions';
+import { Prisma } from '@/providers/prisma';
 
 export enum SecurityType {
   jwt = 'jwt',
@@ -20,7 +20,7 @@ export const authenticationHandler = (
   const [authProvider] = security;
   const permission = authProvider[SecurityType.jwt];
 
-  return async (c, next) => {
+  return async function jwtMiddleware(c, next) {
     const authHeader = c.req.header('authorization');
 
     if (!authHeader || !authHeader.toLowerCase().startsWith('bearer')) {

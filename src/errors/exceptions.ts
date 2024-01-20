@@ -1,6 +1,6 @@
 import { HTTPException } from 'hono/http-exception';
 
-import { HttpStatus } from '@/enums/http.status';
+import { HttpStatus } from '@/enums/http';
 
 export class NotFound extends HTTPException {
   constructor(message = 'Not found.') {
