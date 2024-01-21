@@ -1,1 +1,1 @@
-export const context = Symbol('Context');
+export class HonoContext {}

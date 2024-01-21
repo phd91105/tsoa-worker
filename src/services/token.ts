@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import { sign } from 'hono/jwt';
 import { inject, injectable } from 'tsyringe';
 
-import { context } from '@/constants/injectKey';
+import { HonoContext } from '@/constants/injectKey';
 import { messages } from '@/constants/messages';
 import { ResType } from '@/enums/http';
 import { BadRequest } from '@/errors/exceptions';
@@ -17,7 +17,7 @@ export class TokenService {
   private refreshTokenStorage: KVNamespace;
 
   constructor(
-    @inject(context) private readonly c: Context,
+    @inject(HonoContext) private readonly c: Context,
     @inject(Prisma) private readonly db: Prisma,
   ) {
     this.refreshTokenStorage = this.c.env.token;

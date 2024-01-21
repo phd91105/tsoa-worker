@@ -1,5 +1,6 @@
 import type { MiddlewareHandler } from 'hono';
 import { verify } from 'hono/jwt';
+import _ from 'lodash';
 import { container } from 'tsyringe';
 
 import { Forbidden, Unauthorized } from '@/errors/exceptions';
@@ -48,6 +49,8 @@ export const authenticationHandler = (
     if (permission.length && !permission.includes(user.role)) {
       throw new Forbidden();
     }
+
+    c.set('user', _.pick(user, ['id', 'name', 'email', 'role']));
 
     return next();
   };

@@ -3,11 +3,11 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 import type { Context } from 'hono';
 import { inject, singleton } from 'tsyringe';
 
-import { context } from '@/constants/injectKey';
+import { HonoContext } from '@/constants/injectKey';
 
 @singleton()
 export class Prisma extends PrismaClient {
-  constructor(@inject(context) c: Context) {
+  constructor(@inject(HonoContext) c: Context) {
     super({
       datasources: {
         db: {
