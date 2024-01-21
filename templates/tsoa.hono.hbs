@@ -241,18 +241,17 @@ async function getValidatedArgs(
         case 'body-prop':
           return validationService.ValidateParam(
             args[key],
-            ctx.body?.[name],
+            (await getBody(ctx))[name],
             name,
             errorFields,
             'body.',
             { noImplicitAdditionalProperties: 'throw-on-extras' }
           );
         case 'formData':
-          const body = await getBody(ctx);
           if (args[key].dataType === 'file') {
             return validationService.ValidateParam(
               args[key],
-              body[name],
+              (await getBody(ctx))[name],
               name,
               errorFields,
               undefined,

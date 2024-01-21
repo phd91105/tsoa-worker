@@ -1,7 +1,7 @@
 import {
   Body,
+  BodyProp,
   Controller,
-  NoSecurity,
   Post,
   Response,
   Route,
@@ -10,34 +10,38 @@ import {
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@/enums/http';
-import type { RefreshToken, SignIn, SignUp } from '@/interfaces/authenticate';
+import type { SignIn, SignUp } from '@/interfaces/authenticate';
 import { AuthService } from '@/services/authenticate';
+import { TokenService } from '@/services/token';
 
-@Route('auth')
-@Tags('auth')
-@NoSecurity()
+@Tags('Auth')
+@Route('/auth')
 @injectable()
 export class JWTAuth extends Controller {
   constructor(
     @inject(AuthService)
     private readonly authService: AuthService,
+    @inject(TokenService)
+    private readonly tokenService: TokenService,
   ) {
     super();
   }
 
-  @Response(HttpStatus.CREATED)
   @Post('/register')
+  @Response(HttpStatus.OK)
   signUp(@Body() user: SignUp) {
     return this.authService.regsiter(user);
   }
 
   @Post('/login')
+  @Response(HttpStatus.OK)
   signIn(@Body() user: SignIn) {
     return this.authService.login(user);
   }
 
   @Post('/refresh')
-  refresh(@Body() body: RefreshToken) {
-    return this.authService.refresh(body.refreshToken);
+  @Response(HttpStatus.OK)
+  refresh(@BodyProp() refreshToken: string) {
+    return this.tokenService.refresh(refreshToken);
   }
 }

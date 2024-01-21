@@ -14,28 +14,36 @@ type Security = {
   [key: string]: string[];
 };
 
+const BEARER_PREFIX = 'bearer ';
+
 export const authenticationHandler = (
   security: Security[],
 ): MiddlewareHandler => {
   const [authProvider] = security;
   const permission = authProvider[SecurityType.jwt];
 
-  return async function jwtMiddleware(c, next) {
+  return async (c, next) => {
     const authHeader = c.req.header('authorization');
 
-    if (!authHeader || !authHeader.toLowerCase().startsWith('bearer')) {
+    if (!authHeader || !authHeader.toLowerCase().startsWith(BEARER_PREFIX)) {
       throw new Unauthorized();
     }
 
-    const bearer = authHeader.slice(7);
-    const payload = await verify(bearer, c.env.SECRET);
+    const bearer = authHeader.slice(BEARER_PREFIX.length);
+    const payload = await verify(bearer, c.env.SECRET).catch(() => {
+      throw new Unauthorized();
+    });
 
     const db = container.resolve(Prisma);
-    const user = await db.user.findUnique({
-      where: {
-        id: payload.uid,
-      },
-    });
+    const user = await db.user
+      .findUniqueOrThrow({
+        where: {
+          id: payload.uid,
+        },
+      })
+      .catch(() => {
+        throw new Unauthorized();
+      });
 
     if (permission.length && !permission.includes(user.role)) {
       throw new Forbidden();

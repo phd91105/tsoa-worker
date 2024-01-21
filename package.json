@@ -9,7 +9,7 @@
     "format": "prettier --write src/**/*.ts",
     "postinstall": "run tsoa && husky install",
     "lint": "eslint --fix src/**/*.ts --quiet",
-    "prisma:generate": "prisma generate --no-engine --accelerate",
+    "prisma:generate": "prisma generate --no-engine",
     "prisma:sync": "prisma db push",
     "tsoa": "tsoa spec-and-routes"
   },
