@@ -2706,6 +2706,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"itty-fetcher@npm:^0.9.4":
+  version: 0.9.4
+  resolution: "itty-fetcher@npm:0.9.4"
+  checksum: 2379de51f2590fa0ca3ddbd5fd5a01ce168f96319b710de46731440126f56ea87f0a93c55ce15ec176cbd5e9c90291a623320fff9e4a89bce827e5d4ba787ca7
+  languageName: node
+  linkType: hard
+
 "jackspeak@npm:^2.3.5":
   version: 2.3.6
   resolution: "jackspeak@npm:2.3.6"
@@ -4177,6 +4184,7 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:^10.0.0"
     hono: "npm:^3.12.6"
     husky: "npm:^8.0.3"
+    itty-fetcher: "npm:^0.9.4"
     lint-staged: "npm:^15.2.0"
     lodash: "npm:^4.17.21"
     prettier: "npm:^3.2.4"

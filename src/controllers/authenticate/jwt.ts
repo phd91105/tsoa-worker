@@ -4,15 +4,14 @@ import {
   Controller,
   Get,
   Post,
+  Request,
   Response,
   Route,
   Security,
   Tags,
 } from '@tsoa/runtime';
-import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/injectKey';
 import { HttpStatus } from '@/enums/http';
 import type { SignIn, SignUp } from '@/interfaces/authenticate';
 import { SecurityType } from '@/middlewares/authenticate';
@@ -24,8 +23,6 @@ import { TokenService } from '@/services/token';
 @injectable()
 export class JWTAuth extends Controller {
   constructor(
-    @inject(HonoContext)
-    private readonly c: Context,
     @inject(AuthService)
     private readonly authService: AuthService,
     @inject(TokenService)
@@ -55,7 +52,7 @@ export class JWTAuth extends Controller {
   @Get('/me')
   @Security(SecurityType.jwt)
   @Response(HttpStatus.OK)
-  profile() {
-    return this.c.get('user');
+  profile(@Request() request: ReqCtx) {
+    return request.ctx.get('user');
   }
 }

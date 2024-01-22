@@ -50,3 +50,8 @@ export interface SignIn {
 }
 
 export type UserPayload = Pick<User, 'id'>;
+
+export type GitHubOAuthConfig = {
+  clientId: string;
+  clientSecret: string;
+};

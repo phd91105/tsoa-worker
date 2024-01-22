@@ -25,6 +25,5 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  @@index([email])
   @@map("users")
 }

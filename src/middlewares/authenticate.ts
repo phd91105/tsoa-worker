@@ -1,8 +1,9 @@
+import dayjs from 'dayjs';
 import type { MiddlewareHandler } from 'hono';
 import { verify } from 'hono/jwt';
-import _ from 'lodash';
 import { container } from 'tsyringe';
 
+import { messages } from '@/constants/messages';
 import { Forbidden, Unauthorized } from '@/errors/exceptions';
 import { Prisma } from '@/providers/prisma';
 
@@ -31,13 +32,25 @@ export const authenticationHandler = (
     }
 
     const bearer = authHeader.slice(BEARER_PREFIX.length);
+
+    // Verify token
     const payload = await verify(bearer, c.env.SECRET).catch(() => {
-      throw new Unauthorized();
+      throw new Unauthorized(messages.error.invalidToken);
     });
+
+    if (payload.exp < dayjs().unix()) {
+      throw new Forbidden(messages.error.tokenExpired);
+    }
 
     const db = container.resolve(Prisma);
     const user = await db.user
       .findUniqueOrThrow({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+        },
         where: {
           id: payload.uid,
         },
@@ -46,12 +59,12 @@ export const authenticationHandler = (
         throw new Unauthorized();
       });
 
+    // Check permission
     if (permission.length && !permission.includes(user.role)) {
-      throw new Forbidden();
+      throw new Forbidden(messages.error.permissionDenied);
     }
 
-    c.set('user', _.pick(user, ['id', 'name', 'email', 'role']));
-
+    c.set('user', user);
     return next();
   };
 };
