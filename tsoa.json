@@ -16,7 +16,7 @@
     "routesDir": "./src/",
     "middlewareTemplate": "./templates/tsoa.hono.hbs",
     "iocModule": "./lib/tsyringe",
-    "authenticationModule": "./src/middlewares/authenticate.ts"
+    "authenticationModule": "./src/middlewares/auth.ts"
   },
   "compilerOptions": {
     "paths": {

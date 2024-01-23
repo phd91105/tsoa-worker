@@ -55,3 +55,7 @@ export type GitHubOAuthConfig = {
   clientId: string;
   clientSecret: string;
 };
+
+export type Security = {
+  [key: string]: string[];
+};

@@ -4,12 +4,12 @@ import type { Context } from 'hono';
 import { sign } from 'hono/jwt';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/injectKey';
+import { HonoContext } from '@/constants/inject.keys';
 import { messages } from '@/constants/messages';
 import { ResType } from '@/enums/http';
 import { BadRequest } from '@/errors/exceptions';
-import type { UserPayload } from '@/interfaces/authenticate';
-import { Prisma } from '@/providers/prisma';
+import type { UserPayload } from '@/interfaces/auth';
+import { UserRepository } from '@/repositories/user';
 import { execFn } from '@/utils/context';
 
 @injectable()
@@ -18,7 +18,7 @@ export class TokenService {
 
   constructor(
     @inject(HonoContext) private readonly c: Context,
-    @inject(Prisma) private readonly db: Prisma,
+    @inject(UserRepository) private readonly userRepo: UserRepository,
   ) {
     this.refreshTokenStorage = this.c.env.token;
   }
@@ -48,13 +48,8 @@ export class TokenService {
 
     this.c.executionCtx.waitUntil(
       execFn(
-        this.db.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            lastLogin: dayjs().toDate(),
-          },
+        this.userRepo.update(user.id, {
+          lastLogin: dayjs().toDate(),
         }),
       ),
     );
@@ -72,15 +67,9 @@ export class TokenService {
       throw new BadRequest(messages.error.invalidRefreshToken);
     }
 
-    const user = await this.db.user
-      .findUniqueOrThrow({
-        where: {
-          id: payload.id,
-        },
-      })
-      .catch(() => {
-        throw new BadRequest(messages.error.invalidRefreshToken);
-      });
+    const user = await this.userRepo.findById(payload.id).catch(() => {
+      throw new BadRequest(messages.error.invalidRefreshToken);
+    });
 
     return this.generate(user);
   }

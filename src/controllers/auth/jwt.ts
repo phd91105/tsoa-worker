@@ -13,15 +13,15 @@ import {
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@/enums/http';
-import type { SignIn, SignUp } from '@/interfaces/authenticate';
-import { SecurityType } from '@/middlewares/authenticate';
-import { AuthService } from '@/services/authenticate';
+import type { SignIn, SignUp } from '@/interfaces/auth';
+import { SecurityType } from '@/middlewares/auth';
+import { AuthService } from '@/services/auth';
 import { TokenService } from '@/services/token';
 
 @Tags('Auth')
-@Route('/user')
+@Route('/auth')
 @injectable()
-export class JWTAuth extends Controller {
+export class AuthController extends Controller {
   constructor(
     @inject(AuthService)
     private readonly authService: AuthService,
@@ -43,13 +43,13 @@ export class JWTAuth extends Controller {
     return this.authService.login(user);
   }
 
-  @Post('/refresh')
+  @Post('/refreshToken')
   @Response(HttpStatus.OK)
   refresh(@BodyProp() refreshToken: string) {
     return this.tokenService.refresh(refreshToken);
   }
 
-  @Get('/me')
+  @Get('/profile')
   @Security(SecurityType.jwt)
   @Response(HttpStatus.OK)
   profile(@Request() request: ReqCtx) {

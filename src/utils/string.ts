@@ -1,3 +1,5 @@
+import type { JSONValue } from 'hono/utils/types';
+
 export class StringUtils {
   static truncateUtf8(str: string, n: number): string {
     let result = '';
@@ -33,5 +35,15 @@ export class StringUtils {
       str = str.replace(regex, nonDiacritic);
     }
     return str;
+  }
+}
+
+export class URLUtils {
+  static construct(base: string, params: JSONValue) {
+    const url = new URL(base);
+    Object.entries(params).forEach(([key, value]) => {
+      url.searchParams.append(key, value);
+    });
+    return url.toString();
   }
 }

@@ -3,27 +3,31 @@ import type { Context } from 'hono';
 import { fetcher } from 'itty-fetcher';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/injectKey';
+import { HonoContext } from '@/constants/inject.keys';
 import { GH_OAUTH_BASE_URL, GH_SCOPES } from '@/constants/url';
 import { HttpStatus } from '@/enums/http';
+import { URLUtils } from '@/utils/string';
 
 @injectable()
-export class GithubOAuthService {
+export class GithubService {
   constructor(@inject(HonoContext) private readonly c: Context) {}
 
-  authRedirect(controller: Controller) {
-    const authURL = `${GH_OAUTH_BASE_URL}/authorize?client_id=${this.c.env.GH_CLIENT_ID}&scope=${GH_SCOPES}`;
+  authRedirect(ctl: Controller) {
+    const authURL = URLUtils.construct(GH_OAUTH_BASE_URL + '/authorize', {
+      client_id: this.c.env.GH_CLIENT_ID,
+      scope: GH_SCOPES,
+    });
 
-    controller.setHeader('location', authURL);
-    controller.setStatus(HttpStatus.FOUND);
+    ctl.setHeader('location', authURL);
+    ctl.setStatus(HttpStatus.FOUND);
 
     return 'Redirect';
   }
 
-  async getAccessToken(code: string) {
+  getAccessToken(code: string) {
     const api = fetcher({ base: GH_OAUTH_BASE_URL });
 
-    const data = await api.post(
+    return api.post(
       '/access_token',
       {
         client_id: this.c.env.GH_CLIENT_ID,
@@ -32,7 +36,5 @@ export class GithubOAuthService {
       },
       { headers: { accept: 'application/json' } },
     );
-
-    return data;
   }
 }

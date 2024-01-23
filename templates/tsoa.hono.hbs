@@ -74,7 +74,7 @@ export function RegisterRoutes<T extends Hono>(router: T) {
             };
 
             {{#if ../../iocModule}}
-            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(context.request) : iocContainer;
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(ctx.req) : iocContainer;
 
             const controller: any = container.get<{{../name}}>({{../name}});
             if (typeof controller['setStatus'] === 'function') {
@@ -169,7 +169,7 @@ function returnHandler(
     case 'Object':
       // The default status in required for hono to set the headers
       return ctx.json(
-        data,
+        data as unknown,
         controller.getStatus() || 200,
         controller.getHeaders() as Record<string, string>,
       );  }

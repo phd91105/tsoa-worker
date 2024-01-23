@@ -11,6 +11,4 @@ export default {
       context,
     );
   },
-
-  scheduled() {},
 };

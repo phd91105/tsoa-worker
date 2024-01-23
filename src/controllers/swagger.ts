@@ -7,7 +7,7 @@ import swaggerUI from '~/templates/swagger';
 @Hidden()
 @Route('/docs')
 @injectable()
-export class Swagger extends Controller {
+export class SwaggerController extends Controller {
   @Get()
   docs() {
     this.setHeader('content-type', 'text/html');

@@ -35,6 +35,7 @@ export default `<!DOCTYPE html>
             url: '/docs/spec',
             dom_id: '#swagger-ui',
             deepLinking: true,
+            tagsSorter: 'alpha',
             presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
             plugins: [SwaggerUIBundle.plugins.DownloadUrl],
             layout: 'StandaloneLayout',

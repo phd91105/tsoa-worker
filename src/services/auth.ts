@@ -4,26 +4,24 @@ import { inject, injectable } from 'tsyringe';
 import { messages } from '@/constants/messages';
 import { PrismaErrorCode } from '@/enums/prisma';
 import { BadRequest, Unauthorized } from '@/errors/exceptions';
-import type { SignIn, SignUp } from '@/interfaces/authenticate';
-import { Prisma } from '@/providers/prisma';
+import type { SignIn, SignUp } from '@/interfaces/auth';
+import { UserRepository } from '@/repositories/user';
 import { TokenService } from '@/services/token';
 
 @injectable()
 export class AuthService {
   constructor(
-    @inject(Prisma) private readonly db: Prisma,
     @inject(TokenService) private readonly tokenService: TokenService,
+    @inject(UserRepository) private readonly userRepo: UserRepository,
   ) {}
 
   async regsiter(body: SignUp) {
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
-    const user = await this.db.user
+    const user = await this.userRepo
       .create({
-        data: {
-          ...body,
-          password: hashedPassword,
-        },
+        ...body,
+        password: hashedPassword,
       })
       .catch((e) => {
         if (e.code === PrismaErrorCode.UniqueConstraint) {
@@ -35,18 +33,12 @@ export class AuthService {
     return this.tokenService.generate(user);
   }
 
-  async login(body: SignIn) {
-    const user = await this.db.user
-      .findUniqueOrThrow({
-        where: {
-          email: body.email,
-        },
-      })
-      .catch(() => {
-        throw new Unauthorized(messages.error.invalidEmailOrPassword);
-      });
+  async login({ email, password }: SignIn) {
+    const user = await this.userRepo.findByEmail(email).catch(() => {
+      throw new Unauthorized(messages.error.invalidEmailOrPassword);
+    });
 
-    const validPass = await bcrypt.compare(body.password, user.password);
+    const validPass = await bcrypt.compare(password, user.password);
 
     if (!validPass) {
       throw new Unauthorized(messages.error.invalidEmailOrPassword);
