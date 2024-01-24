@@ -146,7 +146,7 @@ function identifyObject(obj: any) {
 function returnHandler(
   ctx: Context,
   controller: Controller,
-  data?: string | object | number | boolean,
+  data?: string | object | number | boolean,
 ) {
   switch (identifyObject(data)) {
     case 'Number':
@@ -156,7 +156,7 @@ function returnHandler(
       return ctx.text(
         data.toString() as string,
         // The default status in required for hono to set the headers
-        controller.getStatus() || 200,
+        controller.getStatus() || 200,
         controller.getHeaders() as Record<string, string>,
       );    
     case 'ArrayBuffer':    
@@ -182,7 +182,7 @@ async function getBody(ctx: Context) {
     return ctx.req.json();
   }
 
-  if (contentType.startsWith('application/x-www-form-urlencoded') || contentType.startsWith('multipart/form-data')) {
+  if (contentType.startsWith('application/x-www-form-urlencoded') || contentType.startsWith('multipart/form-data')) {
     return ctx.req.parseBody();
   }
 
@@ -194,6 +194,7 @@ async function getValidatedArgs(
     ctx: any,    
   ) {
     const errorFields: FieldErrors = {};
+    const parsedBody = await getBody(ctx);
     const values = await Promise.all(Object.keys(args).map(async (key) => {
       const name = args[key].name;
       switch (args[key].in) {
@@ -232,7 +233,7 @@ async function getValidatedArgs(
         case 'body':
           return validationService.ValidateParam(
             args[key],
-            await getBody(ctx),
+            parsedBody,
             name,
             errorFields,
             undefined,
@@ -241,7 +242,7 @@ async function getValidatedArgs(
         case 'body-prop':
           return validationService.ValidateParam(
             args[key],
-            (await getBody(ctx))[name],
+            parsedBody[name],
             name,
             errorFields,
             'body.',
@@ -251,7 +252,7 @@ async function getValidatedArgs(
           if (args[key].dataType === 'file') {
             return validationService.ValidateParam(
               args[key],
-              (await getBody(ctx))[name],
+              parsedBody[name],
               name,
               errorFields,
               undefined,
@@ -263,7 +264,7 @@ async function getValidatedArgs(
           ) {
             return validationService.ValidateParam(
               args[key],
-              ctx.files,
+              parsedBody.files,
               name,
               errorFields,
               undefined,
@@ -272,7 +273,7 @@ async function getValidatedArgs(
           } else {
             return validationService.ValidateParam(
               args[key],
-              ctx.body[name],
+              parsedBody[name],
               name,
               errorFields,
               undefined,

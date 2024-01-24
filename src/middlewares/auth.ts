@@ -11,7 +11,7 @@ import { UserRepository } from '@/repositories/user';
 
 export enum SecurityType {
   jwt = 'jwt',
-  oauth2 = 'oauth2',
+  githubToken = 'githubToken',
 }
 
 const BEARER_PREFIX = 'bearer ';
@@ -45,13 +45,13 @@ export const authenticationHandler = (
 ): MiddlewareHandler => {
   const authProviders = _.map(security, (s) => _.first(_.keys(s)));
 
-  const jwtProviderIdx = _.indexOf(authProviders, SecurityType.jwt);
-  const permission = security[jwtProviderIdx][SecurityType.jwt];
-
   return async (c, next) => {
-    if (_.includes(authProviders, SecurityType.oauth2)) {
+    if (_.includes(authProviders, SecurityType.githubToken)) {
       return next();
     }
+
+    const jwtProviderIdx = _.indexOf(authProviders, SecurityType.jwt);
+    const permission = security[jwtProviderIdx][SecurityType.jwt];
 
     if (_.includes(authProviders, SecurityType.jwt)) {
       const bearerToken = extractToken(c.req.header('authorization'));

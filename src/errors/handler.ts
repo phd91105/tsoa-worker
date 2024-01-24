@@ -9,6 +9,8 @@ export const notFoundHandler = () => {
 };
 
 export const errorHandler = (e: Error, c: Context) => {
+  console.log(e);
+
   if (e instanceof HTTPException) {
     return e.getResponse();
   }

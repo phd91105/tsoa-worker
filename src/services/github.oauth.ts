@@ -1,6 +1,6 @@
 import type { Controller } from '@tsoa/runtime';
 import type { Context } from 'hono';
-import { fetcher } from 'itty-fetcher';
+import { fetcher, type FetcherType } from 'itty-fetcher';
 import { inject, injectable } from 'tsyringe';
 
 import { HonoContext } from '@/constants/inject.keys';
@@ -10,7 +10,11 @@ import { URLUtils } from '@/utils/string';
 
 @injectable()
 export class GithubService {
-  constructor(@inject(HonoContext) private readonly c: Context) {}
+  private apiFetcher: FetcherType;
+
+  constructor(@inject(HonoContext) private readonly c: Context) {
+    this.apiFetcher = fetcher({ base: GH_OAUTH_BASE_URL });
+  }
 
   authRedirect(ctl: Controller) {
     const authURL = URLUtils.construct(GH_OAUTH_BASE_URL + '/authorize', {
@@ -25,9 +29,7 @@ export class GithubService {
   }
 
   getAccessToken(code: string) {
-    const api = fetcher({ base: GH_OAUTH_BASE_URL });
-
-    return api.post(
+    return this.apiFetcher.post(
       '/access_token',
       {
         client_id: this.c.env.GH_CLIENT_ID,

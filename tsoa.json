@@ -9,6 +9,10 @@
       "jwt": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "githubToken": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   },

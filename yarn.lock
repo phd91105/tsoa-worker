@@ -678,6 +678,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/papaparse@npm:^5.3.14":
+  version: 5.3.14
+  resolution: "@types/papaparse@npm:5.3.14"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: feb4d215903b67442feaa9836a6a5771e78dc6a9da24781e399c6f891622fa82245cd783ab2613c5be43e4a2d6a94da52325538e4485af258166864576ecd0d8
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*":
   version: 6.9.11
   resolution: "@types/qs@npm:6.9.11"
@@ -3367,6 +3376,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"papaparse@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "papaparse@npm:5.4.1"
+  checksum: 201f37c4813453fed5bfb4c01816696b099d2db9ff1e8fb610acc4771fdde91d2a22b6094721edb0fedb21ca3c46f04263f68be4beb3e35b8c72278f0cedc7b7
+  languageName: node
+  linkType: hard
+
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -4173,6 +4189,7 @@ __metadata:
     "@types/bcryptjs": "npm:^2.4.6"
     "@types/lodash": "npm:^4.14.202"
     "@types/node": "npm:^20.11.6"
+    "@types/papaparse": "npm:^5.3.14"
     "@typescript-eslint/eslint-plugin": "npm:^6.19.1"
     "@typescript-eslint/parser": "npm:^6.19.1"
     bcryptjs: "npm:^2.4.3"
@@ -4187,6 +4204,7 @@ __metadata:
     itty-fetcher: "npm:^0.9.4"
     lint-staged: "npm:^15.2.0"
     lodash: "npm:^4.17.21"
+    papaparse: "npm:^5.4.1"
     prettier: "npm:^3.2.4"
     prettier-plugin-organize-imports: "npm:^3.2.4"
     prisma: "npm:^5.8.1"
