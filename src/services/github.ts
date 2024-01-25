@@ -1,26 +1,22 @@
 import type { Context } from 'hono';
-import type { FetcherType } from 'itty-fetcher';
+import { fetcher } from 'itty-fetcher';
 import _ from 'lodash';
 import Papa from 'papaparse';
 import { inject, injectable } from 'tsyringe';
 
+import { commonHeaders, githubUrl } from '@/constants';
 import { HonoContext } from '@/constants/inject.keys';
-import { commonHeaders, githubUrl } from '@/constants/url';
 import type {
   Commit,
   CSVType,
   MinMaxDate,
   PickOptions,
 } from '@/interfaces/github';
-import { Fetcher } from '@/providers/fetcher';
 import { DateUtils } from '@/utils/date';
 
 @injectable()
-export class CommitFilterService {
-  constructor(
-    @inject(HonoContext) private readonly c: Context,
-    @inject(Fetcher) private readonly apiFetcher: FetcherType,
-  ) {}
+export class GithubService {
+  constructor(@inject(HonoContext) private readonly ctx: Context) {}
 
   async cherryPick(file: File, options: PickOptions) {
     const { data } = await this.getCsvData(file);
@@ -57,7 +53,7 @@ export class CommitFilterService {
   ) {
     const repos = _.map(_.split(options.repos, ','), _.trim);
 
-    const commitDataPromises = repos.map(async (repo) => {
+    const commitDataPromises = _.map(repos, async (repo) => {
       const commitData = await this.getCommitData(repo, minMaxDate, options);
 
       return {
@@ -86,15 +82,12 @@ export class CommitFilterService {
 
     const listCommit = _.map(filtered, (item) => {
       const task = _.first(item.commit?.message.match(taskRegEx)).substring(1);
-      const message = item.commit?.message;
-      const committer = item.committer?.login;
-      const shortSha = item.sha.substring(0, 7);
 
       return {
         task,
-        message,
-        committer,
-        sha: shortSha,
+        message: item.commit?.message,
+        committer: item.committer?.login,
+        sha: item.sha.substring(0, 7),
       };
     });
 
@@ -112,7 +105,7 @@ export class CommitFilterService {
     const perPage = 100;
 
     while (hasMoreData) {
-      const data = await this.apiFetcher.get<Commit[]>(
+      const data = await fetcher().get<Commit[]>(
         githubUrl(options.organization, repo),
         {
           sha: options.branch,
@@ -123,8 +116,8 @@ export class CommitFilterService {
         },
         {
           headers: {
-            ...commonHeaders(),
-            Authorization: this.c.req.header('authorization'),
+            ...commonHeaders,
+            Authorization: this.ctx.req.header('authorization'),
           },
         },
       );

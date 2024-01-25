@@ -3,7 +3,7 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["./src/controllers/**/*.ts"],
   "spec": {
-    "outputDirectory": "./src/config",
+    "outputDirectory": "./",
     "specVersion": 3,
     "securityDefinitions": {
       "jwt": {
@@ -17,9 +17,9 @@
     }
   },
   "routes": {
-    "routesDir": "./src/",
+    "routesDir": "./src",
     "middlewareTemplate": "./templates/tsoa.hono.hbs",
-    "iocModule": "./lib/tsyringe",
+    "iocModule": "./src/ioc.ts",
     "authenticationModule": "./src/middlewares/auth.ts"
   },
   "compilerOptions": {

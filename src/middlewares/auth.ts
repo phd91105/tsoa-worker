@@ -4,27 +4,22 @@ import { verify } from 'hono/jwt';
 import _ from 'lodash';
 import { container } from 'tsyringe';
 
+import { bearerPrefix } from '@/constants';
 import { messages } from '@/constants/messages';
+import { SecurityType } from '@/enums/auth';
 import { Forbidden, Unauthorized } from '@/errors/exceptions';
 import type { Security } from '@/interfaces/auth';
 import { UserRepository } from '@/repositories/user';
 
-export enum SecurityType {
-  jwt = 'jwt',
-  githubToken = 'githubToken',
-}
-
-const BEARER_PREFIX = 'bearer ';
-
 const extractToken = (authHeader: string) => {
   if (
     _.isNil(authHeader) ||
-    !_.startsWith(_.lowerCase(authHeader), BEARER_PREFIX)
+    !_.startsWith(_.lowerCase(authHeader), bearerPrefix)
   ) {
     throw new Unauthorized();
   }
 
-  return authHeader.substring(BEARER_PREFIX.length);
+  return authHeader.substring(bearerPrefix.length);
 };
 
 const verifyToken = async (token: string, secret: string) => {

@@ -6,7 +6,7 @@ import { PrismaErrorCode } from '@/enums/prisma';
 import { BadRequest, Unauthorized } from '@/errors/exceptions';
 import type { SignIn, SignUp } from '@/interfaces/auth';
 import { UserRepository } from '@/repositories/user';
-import { TokenService } from '@/services/token';
+import { TokenService } from '@/services/auth/token';
 
 @injectable()
 export class AuthService {
@@ -23,11 +23,11 @@ export class AuthService {
         ...body,
         password: hashedPassword,
       })
-      .catch((e) => {
-        if (e.code === PrismaErrorCode.UniqueConstraint) {
+      .catch((err) => {
+        if (err.code === PrismaErrorCode.UniqueConstraint) {
           throw new BadRequest(messages.error.emailAlreadyExists);
         }
-        throw e;
+        throw err;
       });
 
     return this.tokenService.generate(user);

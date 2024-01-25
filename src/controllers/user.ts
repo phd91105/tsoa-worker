@@ -11,9 +11,9 @@ import {
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { SecurityType } from '@/enums/auth';
 import { HttpStatus } from '@/enums/http';
 import type { UserUpdateInput } from '@/interfaces/user';
-import { SecurityType } from '@/middlewares/auth';
 import { UserRepository } from '@/repositories/user';
 
 @Tags('User')

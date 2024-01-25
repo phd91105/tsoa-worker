@@ -10,22 +10,14 @@ const app = new Hono();
 
 app.use(
   '*',
-  /**
-   * Global middlewares
-   */
+  // Global middlewares
   cors(),
   secureHeaders(),
   provideContext(),
 );
 
-/**
- * Generated routes from controllers
- */
 RegisterRoutes(app);
 
-/**
- * Error handlers
- */
 app.notFound(notFoundHandler);
 app.onError(errorHandler);
 

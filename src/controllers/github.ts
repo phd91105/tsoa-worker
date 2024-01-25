@@ -10,18 +10,18 @@ import {
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { SecurityType } from '@/enums/auth';
 import { HttpStatus } from '@/enums/http';
-import { SecurityType } from '@/middlewares/auth';
-import { CommitFilterService } from '@/services/commit.filter';
+import { GithubService } from '@/services/github';
 
 @Tags('Filter Commit')
 @Route('/commit')
 @Security(SecurityType.githubToken)
 @injectable()
-export class FilterCommitController extends Controller {
+export class GithubController extends Controller {
   constructor(
-    @inject(CommitFilterService)
-    private readonly commitFilterService: CommitFilterService,
+    @inject(GithubService)
+    private readonly githubService: GithubService,
   ) {
     super();
   }
@@ -34,7 +34,7 @@ export class FilterCommitController extends Controller {
     @FormField() repos: string,
     @FormField() branch: string,
   ) {
-    return this.commitFilterService.cherryPick(csv, {
+    return this.githubService.cherryPick(csv, {
       organization,
       repos,
       branch,

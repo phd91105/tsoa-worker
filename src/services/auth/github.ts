@@ -1,25 +1,21 @@
 import type { Controller } from '@tsoa/runtime';
 import type { Context } from 'hono';
-import { fetcher, type FetcherType } from 'itty-fetcher';
+import { fetcher } from 'itty-fetcher';
 import { inject, injectable } from 'tsyringe';
 
+import { githubOAuthUrl, githubScopes } from '@/constants';
 import { HonoContext } from '@/constants/inject.keys';
-import { GH_OAUTH_BASE_URL, GH_SCOPES } from '@/constants/url';
 import { HttpStatus } from '@/enums/http';
 import { URLUtils } from '@/utils/string';
 
 @injectable()
-export class GithubService {
-  private apiFetcher: FetcherType;
-
-  constructor(@inject(HonoContext) private readonly c: Context) {
-    this.apiFetcher = fetcher({ base: GH_OAUTH_BASE_URL });
-  }
+export class GithubOath2Service {
+  constructor(@inject(HonoContext) private readonly ctx: Context) {}
 
   authRedirect(ctl: Controller) {
-    const authURL = URLUtils.construct(GH_OAUTH_BASE_URL + '/authorize', {
-      client_id: this.c.env.GH_CLIENT_ID,
-      scope: GH_SCOPES,
+    const authURL = URLUtils.construct(githubOAuthUrl + '/authorize', {
+      client_id: this.ctx.env.GH_CLIENT_ID,
+      scope: githubScopes,
     });
 
     ctl.setHeader('location', authURL);
@@ -29,11 +25,11 @@ export class GithubService {
   }
 
   getAccessToken(code: string) {
-    return this.apiFetcher.post(
+    return fetcher().post(
       '/access_token',
       {
-        client_id: this.c.env.GH_CLIENT_ID,
-        client_secret: this.c.env.GH_CLIENT_SECRET,
+        client_id: this.ctx.env.GH_CLIENT_ID,
+        client_secret: this.ctx.env.GH_CLIENT_SECRET,
         code,
       },
       { headers: { accept: 'application/json' } },

@@ -8,12 +8,13 @@ export const notFoundHandler = () => {
   throw new NotFound();
 };
 
-export const errorHandler = (e: Error, c: Context) => {
-  console.log(e);
-
-  if (e instanceof HTTPException) {
-    return e.getResponse();
+export const errorHandler = (err: Error, ctx: Context) => {
+  if (err instanceof HTTPException) {
+    return err.getResponse();
   }
 
-  return c.text('Internal server error.', HttpStatus.INTERNAL_SERVER_ERROR);
+  return ctx.text(
+    `Unexpected error: ${err.message}`,
+    HttpStatus.INTERNAL_SERVER_ERROR,
+  );
 };

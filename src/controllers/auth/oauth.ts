@@ -9,15 +9,15 @@ import {
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@/enums/http';
-import { GithubService } from '@/services/github.oauth';
+import { GithubOath2Service } from '@/services/auth/github';
 
 @Tags('Auth')
 @Route('/oauth')
 @injectable()
 export class OAuthController extends Controller {
   constructor(
-    @inject(GithubService)
-    private readonly githubService: GithubService,
+    @inject(GithubOath2Service)
+    private readonly githubOAuth2Service: GithubOath2Service,
   ) {
     super();
   }
@@ -25,12 +25,12 @@ export class OAuthController extends Controller {
   @Get('/github')
   @SuccessResponse(HttpStatus.FOUND, 'Redirect')
   githubAuth() {
-    return this.githubService.authRedirect(this);
+    return this.githubOAuth2Service.authRedirect(this);
   }
 
   @Get('/github/callback')
   @SuccessResponse(HttpStatus.OK)
   githubCallback(@Query() code: string) {
-    return this.githubService.getAccessToken(code);
+    return this.githubOAuth2Service.getAccessToken(code);
   }
 }

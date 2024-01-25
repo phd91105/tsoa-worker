@@ -669,12 +669,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.6":
-  version: 20.11.6
-  resolution: "@types/node@npm:20.11.6"
+"@types/node@npm:^20.11.7":
+  version: 20.11.7
+  resolution: "@types/node@npm:20.11.7"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 922bc1e78076bb79fd168902c80321b54487181e3be3386e183fc535d102d91c8902da25148eaec841410fab7fb872fd4a93ec9ac9299cedf0ebcbf16b442aa1
+  checksum: ba4b41542b64f21a881a277189e761c553d00af0b1c02f2d8a47ebe8bc29a00ed21b45adf0bf9af2cf8ea6c92a443853d4f7b690081ceaecc150719cc574e9ea
   languageName: node
   linkType: hard
 
@@ -1456,6 +1456,34 @@ __metadata:
   dependencies:
     esutils: "npm:^2.0.2"
   checksum: c96bdccabe9d62ab6fea9399fdff04a66e6563c1d6fb3a3a063e8d53c3bb136ba63e84250bbf63d00086a769ad53aef92d2bd483f03f837fc97b71cbee6b2520
+  languageName: node
+  linkType: hard
+
+"dotenv-cli@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "dotenv-cli@npm:7.3.0"
+  dependencies:
+    cross-spawn: "npm:^7.0.3"
+    dotenv: "npm:^16.3.0"
+    dotenv-expand: "npm:^10.0.0"
+    minimist: "npm:^1.2.6"
+  bin:
+    dotenv: cli.js
+  checksum: 1fbad462078fe75c105ff47345671c0a38e8b5416db93a8c669e4e62dd26e3c1db6157aec0926ad6159bb176393395a493f0a23fd6a3e182191cf6d8380c6f16
+  languageName: node
+  linkType: hard
+
+"dotenv-expand@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv-expand@npm:10.0.0"
+  checksum: 298f5018e29cfdcb0b5f463ba8e8627749103fbcf6cf81c561119115754ed582deee37b49dfc7253028aaba875ab7aea5fa90e5dac88e511d009ab0e6677924e
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.3.0":
+  version: 16.4.1
+  resolution: "dotenv@npm:16.4.1"
+  checksum: ef3d95f48f38146df0881a4b58447ae437d2da3f6d645074b84de4e64ef64ba75fc357c5ed66b3c2b813b5369fdeb6a4777d6ade2d50e54eed6aa06dddc98bc4
   languageName: node
   linkType: hard
 
@@ -2360,10 +2388,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^3.12.6":
-  version: 3.12.6
-  resolution: "hono@npm:3.12.6"
-  checksum: 74475dc0519f064a6c25b4d588a65ad06b9e3217c914e1d60aad9f3fc7516786dbda44e5bab527a6e6b8a10fdf30c37d25c2d20bab03681325d65edd6909a913
+"hono@npm:^3.12.7":
+  version: 3.12.7
+  resolution: "hono@npm:3.12.7"
+  checksum: 6faa83f65e362af99768576490cf497bb30045e6c60d926db2ccd7e42a49ab21cc2639ad3b9c55e33d351a3251113766ab7ae039679149d1e4b74523fcb19e00
   languageName: node
   linkType: hard
 
@@ -2401,12 +2429,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "husky@npm:8.0.3"
+"husky@npm:^9.0.6":
+  version: 9.0.6
+  resolution: "husky@npm:9.0.6"
   bin:
-    husky: lib/bin.js
-  checksum: 6722591771c657b91a1abb082e07f6547eca79144d678e586828ae806499d90dce2a6aee08b66183fd8b085f19d20e0990a2ad396961746b4c8bd5bdb619d668
+    husky: bin.js
+  checksum: 1ef034899dcdc35e5bf5436e1e02f8a7177dbb8a10dd91b77456d7fe110c204d8d4a7d53180e0651b87e35f39d7e0e95a53b4b7c334f68aefbc0d93bce4b54f8
   languageName: node
   linkType: hard
 
@@ -2994,9 +3022,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:3.20231218.3":
-  version: 3.20231218.3
-  resolution: "miniflare@npm:3.20231218.3"
+"miniflare@npm:3.20231218.4":
+  version: 3.20231218.4
+  resolution: "miniflare@npm:3.20231218.4"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     acorn: "npm:^8.8.0"
@@ -3012,7 +3040,7 @@ __metadata:
     zod: "npm:^3.20.6"
   bin:
     miniflare: bootstrap.js
-  checksum: 89cd180344cdc425e851a035ff164965aa708541f98c9cb81a5679c95d40c58d37c85b08dd0627a1574872d77543a7c43a67779fd62c5e94373ae80fe4bafa71
+  checksum: d80a1a1479f169c94880ee0f2c6265a2470439195d4c1c1ff505559a1b3b4844da0c3f7ed40e7c0e06fb1dd5873627e85d8c61338c8c0c26f92fbfb1d54dbf60
   languageName: node
   linkType: hard
 
@@ -4188,19 +4216,20 @@ __metadata:
     "@prisma/extension-accelerate": "npm:^0.6.2"
     "@types/bcryptjs": "npm:^2.4.6"
     "@types/lodash": "npm:^4.14.202"
-    "@types/node": "npm:^20.11.6"
+    "@types/node": "npm:^20.11.7"
     "@types/papaparse": "npm:^5.3.14"
     "@typescript-eslint/eslint-plugin": "npm:^6.19.1"
     "@typescript-eslint/parser": "npm:^6.19.1"
     bcryptjs: "npm:^2.4.3"
     dayjs: "npm:^1.11.10"
+    dotenv-cli: "npm:^7.3.0"
     eslint: "npm:^8.56.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-import: "npm:^2.29.1"
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-simple-import-sort: "npm:^10.0.0"
-    hono: "npm:^3.12.6"
-    husky: "npm:^8.0.3"
+    hono: "npm:^3.12.7"
+    husky: "npm:^9.0.6"
     itty-fetcher: "npm:^0.9.4"
     lint-staged: "npm:^15.2.0"
     lodash: "npm:^4.17.21"
@@ -4212,7 +4241,7 @@ __metadata:
     tsoa: "npm:^6.0.1"
     tsyringe: "npm:^4.8.0"
     typescript: "npm:^5.3.3"
-    wrangler: "npm:^3.24.0"
+    wrangler: "npm:^3.25.0"
   languageName: unknown
   linkType: soft
 
@@ -4493,9 +4522,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:^3.24.0":
-  version: 3.24.0
-  resolution: "wrangler@npm:3.24.0"
+"wrangler@npm:^3.25.0":
+  version: 3.25.0
+  resolution: "wrangler@npm:3.25.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:^0.2.0"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
@@ -4504,7 +4533,7 @@ __metadata:
     chokidar: "npm:^3.5.3"
     esbuild: "npm:0.17.19"
     fsevents: "npm:~2.3.2"
-    miniflare: "npm:3.20231218.3"
+    miniflare: "npm:3.20231218.4"
     nanoid: "npm:^3.3.3"
     path-to-regexp: "npm:^6.2.0"
     resolve: "npm:^1.22.8"
@@ -4518,7 +4547,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 4c12568b8a8cc0450cf3dea44db22ef91d1e567b043d3cc49d029534b2dda1460283b35011a7d4ad0c14e2a1c78efcfda952e2bf5395c6233f361d0ea7289325
+  checksum: 0fef5b842f0511fb7ab662873fab94d2e72aa6933518a356667bd4e0dc2d6ccf2d712cbba19b9bd4ca59c8e434bb13dcbb5ee2659df7b55e47b6a70d7a9260b6
   languageName: node
   linkType: hard
 

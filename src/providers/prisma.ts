@@ -7,11 +7,11 @@ import { HonoContext } from '@/constants/inject.keys';
 
 @singleton()
 export class PrismaClient extends Client {
-  constructor(@inject(HonoContext) c: Context) {
+  constructor(@inject(HonoContext) ctx: Context) {
     super({
       datasources: {
         db: {
-          url: c.env.DB_URL,
+          url: ctx.env.DB_URL,
         },
       },
       log: ['query'],

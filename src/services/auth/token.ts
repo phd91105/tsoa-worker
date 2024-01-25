@@ -17,10 +17,10 @@ export class TokenService {
   private refreshTokenStorage: KVNamespace;
 
   constructor(
-    @inject(HonoContext) private readonly c: Context,
+    @inject(HonoContext) private readonly ctx: Context,
     @inject(UserRepository) private readonly userRepo: UserRepository,
   ) {
-    this.refreshTokenStorage = this.c.env.token;
+    this.refreshTokenStorage = this.ctx.env.token;
   }
 
   async generate(user: User) {
@@ -33,10 +33,10 @@ export class TokenService {
         iat: secondSinceEpoch,
         exp: secondSinceEpoch + 60 * 30,
       },
-      this.c.env.SECRET,
+      this.ctx.env.SECRET,
     );
 
-    this.c.executionCtx.waitUntil(
+    this.ctx.executionCtx.waitUntil(
       this.refreshTokenStorage.put(
         refreshToken,
         JSON.stringify({ id: user.id }),
@@ -46,7 +46,7 @@ export class TokenService {
       ),
     );
 
-    this.c.executionCtx.waitUntil(
+    this.ctx.executionCtx.waitUntil(
       execFn(
         this.userRepo.update(user.id, {
           lastLogin: dayjs().toDate(),
@@ -75,7 +75,7 @@ export class TokenService {
   }
 
   revoke(refreshToken: string) {
-    this.c.executionCtx.waitUntil(
+    this.ctx.executionCtx.waitUntil(
       this.refreshTokenStorage.delete(refreshToken),
     );
   }

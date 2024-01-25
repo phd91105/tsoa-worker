@@ -12,11 +12,11 @@ import {
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
+import { SecurityType } from '@/enums/auth';
 import { HttpStatus } from '@/enums/http';
 import type { SignIn, SignUp } from '@/interfaces/auth';
-import { SecurityType } from '@/middlewares/auth';
-import { AuthService } from '@/services/auth';
-import { TokenService } from '@/services/token';
+import { AuthService } from '@/services/auth/jwt';
+import { TokenService } from '@/services/auth/token';
 
 @Tags('Auth')
 @Route('/auth')
