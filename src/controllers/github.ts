@@ -6,7 +6,7 @@ import {
   Route,
   Security,
   Tags,
-  UploadedFile,
+  UploadedFile
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
@@ -21,7 +21,7 @@ import { GithubService } from '@/services/github';
 export class GithubController extends Controller {
   constructor(
     @inject(GithubService)
-    private readonly githubService: GithubService,
+    private readonly githubService: GithubService
   ) {
     super();
   }
@@ -32,12 +32,12 @@ export class GithubController extends Controller {
     @UploadedFile() csv: File,
     @FormField() organization: string,
     @FormField() repos: string,
-    @FormField() branch: string,
+    @FormField() branch: string
   ) {
     return this.githubService.cherryPick(csv, {
       organization,
       repos,
-      branch,
+      branch
     });
   }
 }

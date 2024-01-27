@@ -1,0 +1,25 @@
+name: Batch PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      template:
+        description: 'Batch template'
+        required: true
+
+jobs:
+  run-batch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Browserless
+        run: docker run -d
+          -p 3000:3000
+          -e "PREBOOT_CHROME=true"
+          browserless/chrome:latest
+
+      - name: Run Batch
+        run: |
+          yarn add puppeteer-core
+          echo '${{ inputs.template }}' > batch.mjs
+          node batch.mjs

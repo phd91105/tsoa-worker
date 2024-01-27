@@ -15,7 +15,7 @@ export class GithubOath2Service {
   authRedirect(ctl: Controller) {
     const authURL = URLUtils.construct(githubOAuthUrl + '/authorize', {
       client_id: this.ctx.env.GH_CLIENT_ID,
-      scope: githubScopes,
+      scope: githubScopes
     });
 
     ctl.setHeader('location', authURL);
@@ -30,9 +30,9 @@ export class GithubOath2Service {
       {
         client_id: this.ctx.env.GH_CLIENT_ID,
         client_secret: this.ctx.env.GH_CLIENT_SECRET,
-        code,
+        code
       },
-      { headers: { accept: 'application/json' } },
+      { headers: { accept: 'application/json' } }
     );
   }
 }

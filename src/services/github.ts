@@ -4,13 +4,13 @@ import _ from 'lodash';
 import Papa from 'papaparse';
 import { inject, injectable } from 'tsyringe';
 
-import { commonHeaders, githubUrl } from '@/constants';
+import { commonHeaders, getRepoCommitUrl } from '@/constants';
 import { HonoContext } from '@/constants/inject.keys';
 import type {
   Commit,
   CSVType,
   MinMaxDate,
-  PickOptions,
+  PickOptions
 } from '@/interfaces/github';
 import { DateUtils } from '@/utils/date';
 
@@ -28,7 +28,7 @@ export class GithubService {
     const commitsData = await this.getCommitsDataForRepos(
       listIssue,
       minMaxDate,
-      options,
+      options
     );
 
     return commitsData;
@@ -40,7 +40,7 @@ export class GithubService {
 
     const parsedData = Papa.parse<CSVType>(textEncoder.decode(fileData), {
       header: true,
-      skipEmptyLines: true,
+      skipEmptyLines: true
     });
 
     return parsedData;
@@ -49,7 +49,7 @@ export class GithubService {
   private async getCommitsDataForRepos(
     listIssue: string[],
     minMaxDate: MinMaxDate,
-    options: PickOptions,
+    options: PickOptions
   ) {
     const repos = _.map(_.split(options.repos, ','), _.trim);
 
@@ -60,7 +60,7 @@ export class GithubService {
         repo,
         commits: this.filterCommit(listIssue, commitData),
         from: minMaxDate.minDate,
-        to: minMaxDate.maxDate,
+        to: minMaxDate.maxDate
       };
     });
 
@@ -87,7 +87,7 @@ export class GithubService {
         task,
         message: item.commit?.message,
         committer: item.committer?.login,
-        sha: item.sha.substring(0, 7),
+        sha: item.sha.substring(0, 7)
       };
     });
 
@@ -97,7 +97,7 @@ export class GithubService {
   private async getCommitData(
     repo: string,
     date: MinMaxDate,
-    options: PickOptions,
+    options: PickOptions
   ) {
     const allData = [];
     let page = 1;
@@ -106,20 +106,20 @@ export class GithubService {
 
     while (hasMoreData) {
       const data = await fetcher().get<Commit[]>(
-        githubUrl(options.organization, repo),
+        getRepoCommitUrl(options.organization, repo),
         {
           sha: options.branch,
           since: date.minDate,
           until: date.maxDate,
           per_page: perPage,
-          page: page,
+          page: page
         },
         {
           headers: {
             ...commonHeaders,
-            Authorization: this.ctx.req.header('authorization'),
-          },
-        },
+            authorization: this.ctx.req.header('authorization')
+          }
+        }
       );
 
       allData.push(...data);

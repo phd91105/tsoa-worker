@@ -7,7 +7,7 @@ import {
   Response,
   Route,
   Security,
-  Tags,
+  Tags
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
@@ -23,7 +23,7 @@ import { UserRepository } from '@/repositories/user';
 export class UserController extends Controller {
   constructor(
     @inject(UserRepository)
-    private readonly userRepo: UserRepository,
+    private readonly userRepo: UserRepository
   ) {
     super();
   }

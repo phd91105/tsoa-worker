@@ -3,14 +3,14 @@ export enum HttpMethod {
   post = 'post',
   put = 'put',
   patch = 'patch',
-  delete = 'delete',
+  delete = 'delete'
 }
 
 export enum ResType {
   json = 'json',
   text = 'text',
   arrayBuffer = 'arrayBuffer',
-  stream = 'stream',
+  stream = 'stream'
 }
 
 export enum HttpStatus {
@@ -40,5 +40,5 @@ export enum HttpStatus {
   NOT_IMPLEMENTED = 501,
   BAD_GATEWAY = 502,
   SERVICE_UNAVAILABLE = 503,
-  GATEWAY_TIMEOUT = 504,
+  GATEWAY_TIMEOUT = 504
 }

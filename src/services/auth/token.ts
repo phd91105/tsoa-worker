@@ -10,7 +10,7 @@ import { ResType } from '@/enums/http';
 import { BadRequest } from '@/errors/exceptions';
 import type { UserPayload } from '@/interfaces/auth';
 import { UserRepository } from '@/repositories/user';
-import { execFn } from '@/utils/context';
+import { ContextUtils } from '@/utils/context';
 
 @injectable()
 export class TokenService {
@@ -18,7 +18,7 @@ export class TokenService {
 
   constructor(
     @inject(HonoContext) private readonly ctx: Context,
-    @inject(UserRepository) private readonly userRepo: UserRepository,
+    @inject(UserRepository) private readonly userRepo: UserRepository
   ) {
     this.refreshTokenStorage = this.ctx.env.token;
   }
@@ -31,9 +31,9 @@ export class TokenService {
       {
         uid: user.id,
         iat: secondSinceEpoch,
-        exp: secondSinceEpoch + 60 * 30,
+        exp: secondSinceEpoch + 60 * 30
       },
-      this.ctx.env.SECRET,
+      this.ctx.env.SECRET
     );
 
     this.ctx.executionCtx.waitUntil(
@@ -41,17 +41,17 @@ export class TokenService {
         refreshToken,
         JSON.stringify({ id: user.id }),
         {
-          expirationTtl: 60 * 60 * 24 * 1,
-        },
-      ),
+          expirationTtl: 60 * 60 * 24 * 1
+        }
+      )
     );
 
     this.ctx.executionCtx.waitUntil(
-      execFn(
+      ContextUtils.executeFn(
         this.userRepo.update(user.id, {
-          lastLogin: dayjs().toDate(),
-        }),
-      ),
+          lastLogin: dayjs().toDate()
+        })
+      )
     );
 
     return { refreshToken, accessToken };
@@ -60,7 +60,7 @@ export class TokenService {
   async refresh(refreshToken: string) {
     const payload = await this.refreshTokenStorage.get<UserPayload>(
       refreshToken,
-      ResType.json,
+      ResType.json
     );
 
     if (!payload) {
@@ -76,7 +76,7 @@ export class TokenService {
 
   revoke(refreshToken: string) {
     this.ctx.executionCtx.waitUntil(
-      this.refreshTokenStorage.delete(refreshToken),
+      this.refreshTokenStorage.delete(refreshToken)
     );
   }
 }

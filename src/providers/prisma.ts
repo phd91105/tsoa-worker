@@ -11,10 +11,10 @@ export class PrismaClient extends Client {
     super({
       datasources: {
         db: {
-          url: ctx.env.DB_URL,
-        },
+          url: ctx.env.DB_URL
+        }
       },
-      log: ['query'],
+      log: ['query']
     });
 
     this.$extends(withAccelerate());

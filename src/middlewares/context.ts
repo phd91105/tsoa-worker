@@ -8,7 +8,7 @@ import { HonoContext } from '@/constants/inject.keys';
 export const provideContext = (): MiddlewareHandler => {
   return (c, next) => {
     container.register(HonoContext, {
-      useValue: c,
+      useValue: c
     });
 
     return next();

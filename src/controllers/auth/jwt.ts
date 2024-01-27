@@ -8,7 +8,7 @@ import {
   Response,
   Route,
   Security,
-  Tags,
+  Tags
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
@@ -26,7 +26,7 @@ export class AuthController extends Controller {
     @inject(AuthService)
     private readonly authService: AuthService,
     @inject(TokenService)
-    private readonly tokenService: TokenService,
+    private readonly tokenService: TokenService
   ) {
     super();
   }
@@ -52,7 +52,7 @@ export class AuthController extends Controller {
   @Get('/profile')
   @Security(SecurityType.jwt)
   @Response(HttpStatus.OK)
-  profile(@Request() request: ReqCtx) {
+  profile(@Request() request: RequestContext) {
     return request.ctx.get('user');
   }
 }

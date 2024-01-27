@@ -1,3 +1,5 @@
-export const execFn = (promise: Promise<unknown>) => {
-  return (async () => await promise)();
-};
+export class ContextUtils {
+  static executeFn(promise: Promise<unknown>) {
+    return (async () => await promise)();
+  }
+}

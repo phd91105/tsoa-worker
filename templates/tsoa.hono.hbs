@@ -177,7 +177,15 @@ function returnHandler(
         data as unknown,
         controller.getStatus() || 200,
         controller.getHeaders() as Record<string, string>,
-      );  }
+      );
+
+    case 'null':
+    case 'undefined':
+      return new Response(null, {
+        status: controller.getStatus(),
+        headers: controller.getHeaders() as Record<string, string>,
+      });
+    }
 }
 
 async function getBody(ctx: Context) {

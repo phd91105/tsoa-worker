@@ -28,7 +28,7 @@ export class StringUtils {
       y: /[ỳýỵỷỹ]/g,
       d: /đ/g,
       c: /[ç]/g,
-      n: /[ñ]/g,
+      n: /[ñ]/g
     };
     str = str.toLowerCase().replace(/\s/g, '').replace(/'/g, '');
     for (const [nonDiacritic, regex] of Object.entries(diacriticsMap)) {

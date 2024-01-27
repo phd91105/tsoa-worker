@@ -20,33 +20,30 @@ model User {
   email     String    @unique
   role      Role      @default(user)
   password  String
-  lastLogin DateTime? @map("last_login")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@map("users")
 }
 
-model Film {
-  id         Int          @id @default(autoincrement())
-  title      String?
-  image      String?
-  searchText String?      @map("search_text")
-  filmDetail FilmDetail[]
-  createdAt  DateTime     @default(now()) @map("created_at")
-  updatedAt  DateTime     @updatedAt @map("updated_at")
+model BatchStatus {
+  id          Int        @id @default(autoincrement())
+  name        String?
+  params      Json?
+  status      RunStatus? @default(waiting)
+  filePath    String?
+  createdAt   DateTime   @default(now())
+  createdById Int?
+  updatedAt   DateTime   @updatedAt
+  updatedById Int?
 
-  @@map("films")
+  @@map("batchStatus")
 }
 
-model FilmDetail {
-  id        Int      @id @default(autoincrement())
-  filmId    Int      @map("film_id")
-  film      Film     @relation(fields: [filmId], references: [id])
-  link      String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@index([filmId])
-  @@map("film_detail")
+enum RunStatus {
+  waiting
+  running
+  success
+  failed
 }

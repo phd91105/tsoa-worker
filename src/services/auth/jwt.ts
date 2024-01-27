@@ -12,7 +12,7 @@ import { TokenService } from '@/services/auth/token';
 export class AuthService {
   constructor(
     @inject(TokenService) private readonly tokenService: TokenService,
-    @inject(UserRepository) private readonly userRepo: UserRepository,
+    @inject(UserRepository) private readonly userRepo: UserRepository
   ) {}
 
   async regsiter(body: SignUp) {
@@ -21,7 +21,7 @@ export class AuthService {
     const user = await this.userRepo
       .create({
         ...body,
-        password: hashedPassword,
+        password: hashedPassword
       })
       .catch((err) => {
         if (err.code === PrismaErrorCode.UniqueConstraint) {

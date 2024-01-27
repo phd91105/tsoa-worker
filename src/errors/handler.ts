@@ -15,6 +15,6 @@ export const errorHandler = (err: Error, ctx: Context) => {
 
   return ctx.text(
     `Unexpected error: ${err.message}`,
-    HttpStatus.INTERNAL_SERVER_ERROR,
+    HttpStatus.INTERNAL_SERVER_ERROR
   );
 };

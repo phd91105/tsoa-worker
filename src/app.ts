@@ -13,7 +13,7 @@ app.use(
   // Global middlewares
   cors(),
   secureHeaders(),
-  provideContext(),
+  provideContext()
 );
 
 RegisterRoutes(app);

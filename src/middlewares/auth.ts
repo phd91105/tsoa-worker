@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import type { MiddlewareHandler } from 'hono';
 import { verify } from 'hono/jwt';
 import _ from 'lodash';
@@ -22,21 +21,9 @@ const extractToken = (authHeader: string) => {
   return authHeader.substring(bearerPrefix.length);
 };
 
-const verifyToken = async (token: string, secret: string) => {
-  const payload = await verify(token, secret).catch(() => {
-    throw new Unauthorized(messages.error.invalidToken);
-  });
-
-  if (payload.exp < dayjs().unix()) {
-    throw new Forbidden(messages.error.tokenExpired);
-  }
-
-  return payload;
-};
-
 // Main authentication handler
 export const authenticationHandler = (
-  security: Security[],
+  security: Security[]
 ): MiddlewareHandler => {
   const authProviders = _.map(security, (s) => _.first(_.keys(s)));
 
@@ -51,7 +38,9 @@ export const authenticationHandler = (
     if (_.includes(authProviders, SecurityType.jwt)) {
       const bearerToken = extractToken(c.req.header('authorization'));
 
-      const payload = await verifyToken(bearerToken, c.env.SECRET);
+      const payload = await verify(bearerToken, c.env.SECRET).catch(() => {
+        throw new Unauthorized(messages.error.invalidToken);
+      });
 
       const userRepo = container.resolve(UserRepository);
       const user = await userRepo.findById(payload.uid).catch(() => {

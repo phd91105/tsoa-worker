@@ -4,7 +4,7 @@ import {
   Query,
   Route,
   SuccessResponse,
-  Tags,
+  Tags
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
 
@@ -17,7 +17,7 @@ import { GithubOath2Service } from '@/services/auth/github';
 export class OAuthController extends Controller {
   constructor(
     @inject(GithubOath2Service)
-    private readonly githubOAuth2Service: GithubOath2Service,
+    private readonly githubOAuth2Service: GithubOath2Service
   ) {
     super();
   }

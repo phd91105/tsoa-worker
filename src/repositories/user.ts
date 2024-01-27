@@ -7,14 +7,14 @@ import { PrismaClient } from '@/providers/prisma';
 export class UserRepository {
   constructor(
     @inject(PrismaClient)
-    private readonly db: PrismaClient,
+    private readonly db: PrismaClient
   ) {}
 
   async findById(userId: number) {
     const user = await this.db.user.findUniqueOrThrow({
       where: {
-        id: userId,
-      },
+        id: userId
+      }
     });
 
     return user;
@@ -23,8 +23,8 @@ export class UserRepository {
   async findByEmail(email: string) {
     const user = this.db.user.findUniqueOrThrow({
       where: {
-        email,
-      },
+        email
+      }
     });
 
     return user;
@@ -32,7 +32,7 @@ export class UserRepository {
 
   async create(data: PrismaType.UserCreateInput) {
     const user = await this.db.user.create({
-      data,
+      data
     });
 
     return user;
@@ -41,9 +41,9 @@ export class UserRepository {
   async update(userId: number, data: PrismaType.UserUpdateInput) {
     const user = await this.db.user.update({
       where: {
-        id: userId,
+        id: userId
       },
-      data,
+      data
     });
 
     return user;
