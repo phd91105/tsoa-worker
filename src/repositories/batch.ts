@@ -1,4 +1,4 @@
-import type { Prisma as PrismaType } from '@prisma/client/edge';
+import type { Prisma } from '@prisma/client/edge';
 import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
 
@@ -13,7 +13,7 @@ export class BatchRepository {
   ) {}
 
   async findAll() {
-    return this.db.batchStatus.findMany({
+    const allBatch = await this.db.batchStatus.findMany({
       where: {
         createdById: this.ctx.get('user').id
       },
@@ -21,10 +21,13 @@ export class BatchRepository {
         id: 'desc'
       }
     });
+
+    return allBatch;
   }
 
-  async create(data: PrismaType.BatchStatusCreateInput) {
+  async create(data: Prisma.BatchStatusCreateInput) {
     const user = this.ctx.get('user');
+
     const batch = await this.db.batchStatus.create({
       data: {
         ...data,
@@ -36,7 +39,7 @@ export class BatchRepository {
     return batch;
   }
 
-  async update(id: number, data: PrismaType.BatchStatusUpdateInput) {
+  async update(id: number, data: Prisma.BatchStatusUpdateInput) {
     const batch = await this.db.batchStatus.update({
       where: {
         id

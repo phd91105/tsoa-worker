@@ -4,12 +4,12 @@ import { type FC, memo } from 'hono/jsx';
 const htmlStyle = {
   boxSizing: 'border-box',
   overflow: '-moz-scrollbars-vertical',
-  overflowY: 'scroll',
+  overflowY: 'scroll'
 };
 
 const bodyStyle = {
   margin: 0,
-  background: '#fafafa',
+  background: '#fafafa'
 };
 
 const ScopedScript = () =>
@@ -22,7 +22,7 @@ const ScopedScript = () =>
         tagsSorter: 'alpha',
         presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
         plugins: [SwaggerUIBundle.plugins.DownloadUrl],
-        layout: 'StandaloneLayout',
+        layout: 'StandaloneLayout'
       });
     };
   </script>`;

@@ -2,9 +2,9 @@ import {
   Controller,
   FormField,
   Post,
-  Response,
   Route,
   Security,
+  SuccessResponse,
   Tags,
   UploadedFile
 } from '@tsoa/runtime';
@@ -27,7 +27,7 @@ export class GithubController extends Controller {
   }
 
   @Post('/filter')
-  @Response(HttpStatus.OK)
+  @SuccessResponse(HttpStatus.OK)
   cherryPick(
     @UploadedFile() csv: File,
     @FormField() organization: string,

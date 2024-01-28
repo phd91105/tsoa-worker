@@ -1,10 +1,10 @@
 import type { Context } from 'hono';
 import { fetcher } from 'itty-fetcher';
-import _ from 'lodash';
+import { filter, first, flatMap, includes, map, split, trim } from 'lodash';
 import Papa from 'papaparse';
 import { inject, injectable } from 'tsyringe';
 
-import { commonHeaders, getRepoCommitUrl } from '@/constants';
+import { commonHeaders, getCommitPath, githubApiUrl } from '@/constants';
 import { HonoContext } from '@/constants/inject.keys';
 import type {
   Commit,
@@ -21,8 +21,8 @@ export class GithubService {
   async cherryPick(file: File, options: PickOptions) {
     const { data } = await this.getCsvData(file);
 
-    const listIssue = _.map(data, '#');
-    const listDate = _.flatMap(data, (o) => [o.Created, o.Updated]);
+    const listIssue = map(data, '#');
+    const listDate = flatMap(data, (o) => [o.Created, o.Updated]);
     const minMaxDate = DateUtils.findMinMaxDates(listDate);
 
     const commitsData = await this.getCommitsDataForRepos(
@@ -51,9 +51,9 @@ export class GithubService {
     minMaxDate: MinMaxDate,
     options: PickOptions
   ) {
-    const repos = _.map(_.split(options.repos, ','), _.trim);
+    const repos = map(split(options.repos, ','), trim);
 
-    const commitDataPromises = _.map(repos, async (repo) => {
+    const commitDataPromises = map(repos, async (repo) => {
       const commitData = await this.getCommitData(repo, minMaxDate, options);
 
       return {
@@ -70,18 +70,18 @@ export class GithubService {
   private filterCommit(listIssue: string[], data: Commit[]) {
     const taskRegEx = /#\d+/;
 
-    const filtered = _.filter(data, (item) => {
+    const filtered = filter(data, (item) => {
       const issueMatch = item.commit?.message.match(taskRegEx);
 
       return (
         issueMatch &&
         item.committer?.login !== 'web-flow' &&
-        _.includes(listIssue, _.first(issueMatch).substring(1))
+        includes(listIssue, first(issueMatch).substring(1))
       );
     });
 
-    const listCommit = _.map(filtered, (item) => {
-      const task = _.first(item.commit?.message.match(taskRegEx)).substring(1);
+    const listCommit = map(filtered, (item) => {
+      const task = first(item.commit?.message.match(taskRegEx)).substring(1);
 
       return {
         task,
@@ -105,8 +105,8 @@ export class GithubService {
     const perPage = 100;
 
     while (hasMoreData) {
-      const data = await fetcher().get<Commit[]>(
-        getRepoCommitUrl(options.organization, repo),
+      const data = await fetcher({ base: githubApiUrl }).get<Commit[]>(
+        getCommitPath(options.organization, repo),
         {
           sha: options.branch,
           since: date.minDate,

@@ -1,0 +1,27 @@
+name: Batch
+
+on:
+  workflow_dispatch:
+    inputs:
+      batchName:
+        required: true
+      request:
+        required: true
+
+jobs:
+  run-batch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .yarn
+            batch
+
+      - name: Install dependencies
+        run: yarn workspaces focus batch --production
+
+      - name: Run Script
+        run: |
+          node batch/${{ github.event.inputs.batchName }}.mjs '${{ github.event.inputs.request }}'

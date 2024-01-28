@@ -1,18 +1,3 @@
-export enum HttpMethod {
-  get = 'get',
-  post = 'post',
-  put = 'put',
-  patch = 'patch',
-  delete = 'delete'
-}
-
-export enum ResType {
-  json = 'json',
-  text = 'text',
-  arrayBuffer = 'arrayBuffer',
-  stream = 'stream'
-}
-
 export enum HttpStatus {
   SWITCHING_PROTOCOLS = 101,
   OK = 200,
@@ -41,4 +26,11 @@ export enum HttpStatus {
   BAD_GATEWAY = 502,
   SERVICE_UNAVAILABLE = 503,
   GATEWAY_TIMEOUT = 504
+}
+
+export enum ResType {
+  json = 'json',
+  text = 'text',
+  arrayBuffer = 'arrayBuffer',
+  stream = 'stream'
 }

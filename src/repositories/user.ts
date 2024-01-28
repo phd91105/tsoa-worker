@@ -1,4 +1,4 @@
-import type { Prisma as PrismaType } from '@prisma/client/edge';
+import type { Prisma } from '@prisma/client/edge';
 import { inject, injectable } from 'tsyringe';
 
 import { PrismaClient } from '@/providers/prisma';
@@ -21,7 +21,7 @@ export class UserRepository {
   }
 
   async findByEmail(email: string) {
-    const user = this.db.user.findUniqueOrThrow({
+    const user = await this.db.user.findUniqueOrThrow({
       where: {
         email
       }
@@ -30,7 +30,7 @@ export class UserRepository {
     return user;
   }
 
-  async create(data: PrismaType.UserCreateInput) {
+  async create(data: Prisma.UserCreateInput) {
     const user = await this.db.user.create({
       data
     });
@@ -38,7 +38,7 @@ export class UserRepository {
     return user;
   }
 
-  async update(userId: number, data: PrismaType.UserUpdateInput) {
+  async update(userId: number, data: Prisma.UserUpdateInput) {
     const user = await this.db.user.update({
       where: {
         id: userId

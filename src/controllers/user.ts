@@ -4,9 +4,9 @@ import {
   Get,
   Patch,
   Path,
-  Response,
   Route,
   Security,
+  SuccessResponse,
   Tags
 } from '@tsoa/runtime';
 import { inject, injectable } from 'tsyringe';
@@ -29,13 +29,13 @@ export class UserController extends Controller {
   }
 
   @Get('{id}')
-  @Response(HttpStatus.OK)
+  @SuccessResponse(HttpStatus.OK)
   findById(@Path() id: number) {
     return this.userRepo.findById(id);
   }
 
   @Patch('{id}')
-  @Response(HttpStatus.NO_CONTENT)
+  @SuccessResponse(HttpStatus.NO_CONTENT)
   updateById(@Path() id: number, @Body() data: UserUpdateInput) {
     return this.userRepo.update(id, data);
   }

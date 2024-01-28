@@ -31,7 +31,7 @@ export class TokenService {
       {
         uid: user.id,
         iat: secondSinceEpoch,
-        exp: secondSinceEpoch + 60 * 30
+        exp: secondSinceEpoch + 60 * 60 * 4
       },
       this.ctx.env.SECRET
     );

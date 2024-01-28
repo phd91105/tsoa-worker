@@ -7,9 +7,9 @@ import {
   Patch,
   Path,
   Post,
-  Response,
   Route,
   Security,
+  SuccessResponse,
   Tags,
   UploadedFile
 } from '@tsoa/runtime';
@@ -29,29 +29,32 @@ import { BatchService } from '@/services/batch';
 @injectable()
 export class BatchController extends Controller {
   constructor(
-    @inject(BatchService) private readonly batchService: BatchService,
-    @inject(BatchRepository) private readonly batchRepo: BatchRepository,
-    @inject(HonoContext) private readonly ctx: Context
+    @inject(BatchService)
+    private readonly batchService: BatchService,
+    @inject(BatchRepository)
+    private readonly batchRepo: BatchRepository,
+    @inject(HonoContext)
+    private readonly ctx: Context
   ) {
     super();
   }
 
   @Post('/')
-  @Response(HttpStatus.CREATED)
+  @SuccessResponse(HttpStatus.CREATED)
   createBatch(@Body() batchRequest: BatchRequest) {
     this.setStatus(HttpStatus.CREATED);
 
-    return this.batchService.triggerWorkflow(batchRequest);
+    return this.batchService.createBatch(batchRequest);
   }
 
   @Get('/')
-  @Response(HttpStatus.OK)
+  @SuccessResponse(HttpStatus.OK)
   getBatch() {
     return this.batchRepo.findAll();
   }
 
   @Patch('{id}')
-  @Response(HttpStatus.NO_CONTENT)
+  @SuccessResponse(HttpStatus.NO_CONTENT)
   updateStatus(
     @Path() id: number,
     @Body() body: Prisma.BatchStatusUpdateInput
@@ -64,7 +67,7 @@ export class BatchController extends Controller {
   }
 
   @Post('/fileUpload/{id}')
-  @Response(HttpStatus.NO_CONTENT)
+  @SuccessResponse(HttpStatus.NO_CONTENT)
   fileUpload(@Path() id: number, @UploadedFile() file: File) {
     this.setStatus(HttpStatus.NO_CONTENT);
 
@@ -73,7 +76,7 @@ export class BatchController extends Controller {
 
   @Get('/file/{filePath}')
   @NoSecurity()
-  @Response(HttpStatus.OK)
+  @SuccessResponse(HttpStatus.OK)
   getFile(@Path() filePath: string) {
     this.setHeader('content-type', 'application/pdf');
 

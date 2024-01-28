@@ -37,8 +37,8 @@ export class DateUtils {
     });
 
     return {
-      minDate: minDate.toISOString().split('T')[0] + 'T00:00:00Z',
-      maxDate: maxDate.toISOString().split('T')[0] + 'T23:59:59Z'
+      minDate: `${minDate.toISOString().split('T')[0]}T00:00:00Z`,
+      maxDate: `${maxDate.toISOString().split('T')[0]}T23:59:59Z`
     };
   }
 }

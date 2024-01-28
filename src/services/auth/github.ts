@@ -9,23 +9,21 @@ import { HttpStatus } from '@/enums/http';
 import { URLUtils } from '@/utils/string';
 
 @injectable()
-export class GithubOath2Service {
+export class GithubOAth2Service {
   constructor(@inject(HonoContext) private readonly ctx: Context) {}
 
   authRedirect(ctl: Controller) {
-    const authURL = URLUtils.construct(githubOAuthUrl + '/authorize', {
+    const authURL = URLUtils.construct(`${githubOAuthUrl}/authorize`, {
       client_id: this.ctx.env.GH_CLIENT_ID,
       scope: githubScopes
     });
 
     ctl.setHeader('location', authURL);
     ctl.setStatus(HttpStatus.FOUND);
-
-    return 'Redirect';
   }
 
   getAccessToken(code: string) {
-    return fetcher().post(
+    return fetcher({ base: githubOAuthUrl }).post(
       '/access_token',
       {
         client_id: this.ctx.env.GH_CLIENT_ID,
