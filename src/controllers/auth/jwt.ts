@@ -12,7 +12,7 @@ import {
 import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import { SecurityType } from '@/enums/auth';
 import { HttpStatus } from '@/enums/http';
 import type { SignIn, SignUp } from '@/interfaces/auth';

@@ -1,6 +1,6 @@
-import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
+import { Hono } from 'hono/tiny';
 
 import { errorHandler, notFoundHandler } from '@/errors/handler';
 import { provideContext } from '@/middlewares/context';
@@ -9,7 +9,6 @@ import { RegisterRoutes } from '@/routes';
 const app = new Hono();
 
 app.use(
-  '*',
   // Global middlewares
   cors(),
   secureHeaders(),

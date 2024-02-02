@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import { sign } from 'hono/jwt';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import { messages } from '@/constants/messages';
 import { ResType } from '@/enums/http';
 import { BadRequest } from '@/errors/exceptions';
@@ -31,7 +31,7 @@ export class TokenService {
       {
         uid: user.id,
         iat: secondSinceEpoch,
-        exp: secondSinceEpoch + 60 * 60 * 4
+        exp: secondSinceEpoch + 60 * 60 * 6
       },
       this.ctx.env.SECRET
     );

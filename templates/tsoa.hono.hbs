@@ -23,7 +23,9 @@ import { authenticationHandler } from '{{authenticationModule}}';
 {{#if iocModule}}
 import { iocContainer } from '{{iocModule}}';
 {{/if}}
-import { Hono, Context, Next } from 'hono';
+import { Hono } from 'hono/tiny';
+import type { Context, Next } from 'hono';
+import { StatusCode } from 'hono/utils/http-status';
 // swagger
 import swaggerUI from '../templates/swagger';
 import swaggerSpec from '../swagger.json';
@@ -102,7 +104,7 @@ export function RegisterRoutes<T extends Hono>(router: T) {
                   validatedArgs = await getValidatedArgs(args, ctx);
                 } catch (err: any) {
                   if (err instanceof ValidateError) {
-                    return ctx.json({ fields: err.fields }, err.status || 400);
+                    return ctx.json({ fields: err.fields }, (err.status || 422) as StatusCode);
                   }
 
                   return ctx.json({
@@ -161,7 +163,7 @@ function returnHandler(
       return ctx.text(
         data.toString() as string,
         // The default status in required for hono to set the headers
-        controller.getStatus() || 200,
+        (controller.getStatus() || 200) as StatusCode,
         controller.getHeaders() as Record<string, string>,
       );    
     case 'ArrayBuffer':    
@@ -175,7 +177,7 @@ function returnHandler(
       // The default status in required for hono to set the headers
       return ctx.json(
         data as unknown,
-        controller.getStatus() || 200,
+        (controller.getStatus() || 200) as StatusCode,
         controller.getHeaders() as Record<string, string>,
       );
 

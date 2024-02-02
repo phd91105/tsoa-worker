@@ -11,9 +11,13 @@ export class UserRepository {
   ) {}
 
   async findById(userId: number) {
-    const user = await this.db.user.findUniqueOrThrow({
+    const user = await this.db.withAccelerate.user.findUniqueOrThrow({
       where: {
         id: userId
+      },
+      cacheStrategy: {
+        swr: 30,
+        ttl: 60
       }
     });
 

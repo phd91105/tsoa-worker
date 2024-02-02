@@ -1,3 +1,4 @@
+import type { Prisma } from '@prisma/client/edge';
 import {
   Body,
   Controller,
@@ -13,7 +14,6 @@ import { inject, injectable } from 'tsyringe';
 
 import { SecurityType } from '@/enums/auth';
 import { HttpStatus } from '@/enums/http';
-import type { UserUpdateInput } from '@/interfaces/user';
 import { UserRepository } from '@/repositories/user';
 
 @Tags('User')
@@ -36,7 +36,7 @@ export class UserController extends Controller {
 
   @Patch('{id}')
   @SuccessResponse(HttpStatus.NO_CONTENT)
-  updateById(@Path() id: number, @Body() data: UserUpdateInput) {
+  updateById(@Path() id: number, @Body() data: Prisma.UserUpdateInput) {
     return this.userRepo.update(id, data);
   }
 }

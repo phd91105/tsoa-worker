@@ -16,7 +16,7 @@ import {
 import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import { SecurityType } from '@/enums/auth';
 import { HttpStatus, ResType } from '@/enums/http';
 import type { BatchRequest } from '@/interfaces/batch';
@@ -44,7 +44,7 @@ export class BatchController extends Controller {
   createBatch(@Body() batchRequest: BatchRequest) {
     this.setStatus(HttpStatus.CREATED);
 
-    return this.batchService.createBatch(batchRequest);
+    return this.batchService.sendBatchRequest(batchRequest);
   }
 
   @Get('/')

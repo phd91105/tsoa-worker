@@ -12,25 +12,27 @@ const bodyStyle = {
   background: '#fafafa'
 };
 
-const ScopedScript = () =>
-  html`<script>
-    window.onload = function () {
-      window.ui = SwaggerUIBundle({
-        url: '/docs/spec',
-        dom_id: '#swagger-ui',
-        deepLinking: true,
-        tagsSorter: 'alpha',
-        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
-        layout: 'StandaloneLayout'
-      });
-    };
-  </script>`;
+const ScopedScript: FC = memo(
+  () =>
+    html`<script>
+      window.onload = function () {
+        window.ui = SwaggerUIBundle({
+          url: '/docs/spec',
+          dom_id: '#swagger-ui',
+          deepLinking: true,
+          tagsSorter: 'alpha',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+          layout: 'StandaloneLayout'
+        });
+      };
+    </script>`
+);
 
 const Script: FC = memo(() => (
   <>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.11.2/swagger-ui-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.11.2/swagger-ui-standalone-preset.js"></script>
     <ScopedScript />
   </>
 ));
@@ -41,7 +43,7 @@ const Head: FC = memo(() => (
     <title>Swagger UI</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css"
+      href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.11.2/swagger-ui.min.css"
     />
   </head>
 ));
@@ -52,12 +54,12 @@ const Body: FC = memo(() => (
   </body>
 ));
 
-const SwaggerUI: FC = () => (
+const SwaggerUI: FC = memo(() => (
   <html style={htmlStyle}>
     <Head />
     <Body />
     <Script />
   </html>
-);
+));
 
 export default <SwaggerUI />;

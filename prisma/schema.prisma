@@ -27,6 +27,13 @@ model User {
   @@map("users")
 }
 
+enum RunStatus {
+  waiting
+  running
+  success
+  failed
+}
+
 model BatchStatus {
   id          Int        @id @default(autoincrement())
   name        String?
@@ -41,9 +48,25 @@ model BatchStatus {
   @@map("batchStatus")
 }
 
-enum RunStatus {
-  waiting
-  running
-  success
-  failed
+enum FileSystemObjectType {
+  file
+  folder
+}
+
+model FileSystemObject {
+  id          Int                  @id @default(autoincrement())
+  parentID    Int?
+  name        String
+  type        FileSystemObjectType
+  size        BigInt?
+  contentType String?
+  createdAt   DateTime             @default(now())
+  createdById Int?
+  updatedAt   DateTime             @updatedAt
+  updatedById Int?
+  children    FileSystemObject[]   @relation("ParentChild")
+  parent      FileSystemObject?    @relation("ParentChild", fields: [parentID], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([parentID])
+  @@map("fileSystemObjects")
 }

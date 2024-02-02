@@ -1,6 +1,6 @@
 {
   "name": "batch",
   "dependencies": {
-    "puppeteer": "^21.10.0"
+    "puppeteer": "^22.1.0"
   }
 }

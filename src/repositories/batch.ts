@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client/edge';
 import type { Context } from 'hono';
 import { inject, injectable } from 'tsyringe';
 
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import { PrismaClient } from '@/providers/prisma';
 
 @injectable()

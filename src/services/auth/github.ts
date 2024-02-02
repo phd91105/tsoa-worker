@@ -4,7 +4,7 @@ import { fetcher } from 'itty-fetcher';
 import { inject, injectable } from 'tsyringe';
 
 import { githubOAuthUrl, githubScopes } from '@/constants';
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import { HttpStatus } from '@/enums/http';
 import { URLUtils } from '@/utils/string';
 

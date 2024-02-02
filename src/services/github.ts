@@ -5,7 +5,7 @@ import Papa from 'papaparse';
 import { inject, injectable } from 'tsyringe';
 
 import { commonHeaders, getCommitPath, githubApiUrl } from '@/constants';
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import type {
   Commit,
   CSVType,

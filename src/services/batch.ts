@@ -5,7 +5,7 @@ import { trimEnd } from 'lodash';
 import { inject, injectable } from 'tsyringe';
 
 import { commonHeaders, githubApiUrl, triggerWorkflowPath } from '@/constants';
-import { HonoContext } from '@/constants/inject.keys';
+import { HonoContext } from '@/constants/injectKeys';
 import type { BatchRequest } from '@/interfaces/batch';
 import { BatchRepository } from '@/repositories/batch';
 import { ContextUtils } from '@/utils/context';
@@ -17,15 +17,12 @@ export class BatchService {
     @inject(BatchRepository) private readonly batchRepo: BatchRepository
   ) {}
 
-  async createBatch(batchRequest: BatchRequest) {
-    let batch: BatchStatus;
+  async sendBatchRequest(batchRequest: BatchRequest) {
+    const batch = await this.initializeBatch(batchRequest);
 
     try {
-      batch = await this.initializeBatch(batchRequest);
-
-      await this.triggerGitHubAction(batch, batchRequest);
-
       this.updateBatchStatus(batch.id, RunStatus.running);
+      await this.triggerGitHubAction(batch, batchRequest);
 
       return { id: batch.id, status: batch.status };
     } catch (err) {

@@ -8,4 +8,5 @@ kv_namespaces = [
     { binding = "storage", id = "0bff6a0bd20e4c81a7fd17670ec13583", preview_id = "754b6130affa469398c7cd439a78109c" },
 ]
 
-ai = { binding = "AI" }
+[triggers]
+crons = ["*/5 * * * *"]
